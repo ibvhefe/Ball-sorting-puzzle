@@ -2,14 +2,19 @@
 
 void Main()
 {
-	
+    // Solve with constraint search.
+	// count of possible solutions
+	// depth
+
+    var riddleCreator = new RiddleCreator(4,3,2);
+    riddleCreator.Create();
 }
 
 class RiddleCreator
 {
-byte cupSize = 4;
-byte cupCount = 3;
-byte colorCount = 2;
+byte cupSize;
+byte cupCount;
+byte colorCount;
 
 public RiddleCreator(byte cupSize, byte cupCount, byte colorCount)
 {
@@ -35,10 +40,6 @@ public void Create()
 	//cups[2, 2] = 2;
 	//cups[2, 3] = 2;
 	//cups.Dump();
-	
-	// Solve with constraint search.
-	// count of possible solutions
-	// depth
 	
 	
 	var currentStep = new SolvingStep()
@@ -329,4 +330,11 @@ class Move
 {
 	public byte From { get; set; }
 	public byte To { get; set; }
+}
+
+class CreationStatistics
+{
+    public List<List<SolvingStep>> Solutions { get; set; }
+    public int nodeCount { get; set; }
+    
 }
