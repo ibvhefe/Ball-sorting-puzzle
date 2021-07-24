@@ -1,12 +1,26 @@
 <Query Kind="Program" />
 
+void Main()
+{
+	
+}
+
+class RiddleCreator
+{
 byte cupSize = 4;
 byte cupCount = 3;
 byte colorCount = 2;
 
-void Main()
+public RiddleCreator(byte cupSize, byte cupCount, byte colorCount)
 {
-	var cups = new byte[cupCount, cupSize];
+    this.cupSize = cupSize;
+    this.cupCount = cupCount;
+    this.colorCount = colorCount;
+}
+
+public void Create()
+{
+    var cups = new byte[cupCount, cupSize];
 	DistributeRandomly(cups);
 	//cups[0,0]=0;
 	//cups[0,1]=0;
@@ -301,6 +315,7 @@ static class RandomExtensions
 			array[k] = temp;
 		}
 	}
+}
 }
 
 class SolvingStep
