@@ -15,12 +15,14 @@ class RiddleCreator
 byte cupSize;
 byte cupCount;
 byte colorCount;
+int nodeCount;
 
 public RiddleCreator(byte cupSize, byte cupCount, byte colorCount)
 {
     this.cupSize = cupSize;
     this.cupCount = cupCount;
     this.colorCount = colorCount;
+    this.nodeCount = 0;
 }
 
 public void Create()
@@ -61,7 +63,8 @@ private Boolean SolveInternal(List<Queue<SolvingStep>> allSolutions, List<Solvin
 	}
 	
 	currentSolution.Insert(0, currentStep);
-
+    this.nodeCount++;
+    
 	if (IsGoalReached(currentStep.Board))
 	{
 		return true;
@@ -111,7 +114,6 @@ private Boolean AreEqual(byte[,] a, byte[,] b)
 private SolvingStep CreateNextStep(SolvingStep currentStep, byte from, byte to)
 {
 	var clone = Clone(currentStep);
-	clone.MoveCount++;
 	clone.LastMove = new Move() { From = from, To = to };
 	var pulledColor = Pull(clone.Board, from);
 	Push(clone.Board, to, pulledColor);
@@ -219,8 +221,7 @@ private SolvingStep Clone(SolvingStep step)
 {
 	return new SolvingStep
 	{
-		Board = Clone(step.Board),
-		MoveCount = step.MoveCount,
+		Board = Clone(step.Board);
 		LastMove = step.LastMove
 	};
 }
@@ -321,7 +322,6 @@ static class RandomExtensions
 
 class SolvingStep
 {
-	public int MoveCount { get; set; }
 	public byte[,] Board { get; set; }
 	public Move LastMove { get; set; }
 }
@@ -336,5 +336,4 @@ class CreationStatistics
 {
     public List<List<SolvingStep>> Solutions { get; set; }
     public int nodeCount { get; set; }
-    
 }
