@@ -63,7 +63,7 @@ private Boolean SolveInternal(List<SolvingStep> currentSolution, SolvingStep cur
     // Avoid infinite loops.
 	if (currentSolution.Any(step => AreEqual(step.Board, currentStep.Board)))
 	{
-		return false;
+		return;
 	}
 	
 	currentSolution.Insert(0, currentStep);
@@ -71,7 +71,8 @@ private Boolean SolveInternal(List<SolvingStep> currentSolution, SolvingStep cur
     
 	if (IsGoalReached(currentStep.Board))
 	{
-		return true;
+	    this.allSolutions.Add(Clone(currentSolution));
+		return;
 	}
 	
 	for(byte from=0;from<=cupCount-1;from++)
@@ -88,15 +89,10 @@ private Boolean SolveInternal(List<SolvingStep> currentSolution, SolvingStep cur
 			if (IsMovePossible(currentStep.Board, from, to, fromColor, toColor))
 			{
 				var nextStep = CreateNextStep(currentStep, from, to);
-				if (SolveInternal(currentSolution, nextStep))
-				{
-					return true;
-				}
+				SolveInternal(currentSolution, nextStep);
 			}
 		}
 	}
-	
-	return false;
 }
 
 private Boolean AreEqual(byte[,] a, byte[,] b)
@@ -229,6 +225,17 @@ private SolvingStep Clone(SolvingStep step)
 		LastMove = step.LastMove
 	};
 }
+
+private List<SolvingStep> Clone(List<SolvingStep> steps)
+    {
+        var clonedList = new List<SolvingStep>();
+        foreach(var step in steps)
+        {
+            clonedList.Add(Clone(step));
+        }
+        
+        return clonedList;
+    }
 
 private byte[,] Clone(byte[,] array)
 {
