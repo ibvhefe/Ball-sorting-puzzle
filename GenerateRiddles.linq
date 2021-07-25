@@ -60,6 +60,7 @@ public CreationStatistics Create()
 
 private Boolean SolveInternal(List<SolvingStep> currentSolution, SolvingStep currentStep)
 {
+    // Avoid infinite loops.
 	if (currentSolution.Any(step => AreEqual(step.Board, currentStep.Board)))
 	{
 		return false;
