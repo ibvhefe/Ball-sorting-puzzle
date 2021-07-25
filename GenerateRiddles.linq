@@ -55,7 +55,8 @@ public CreationStatistics Create()
 	SolveInternal(solution, currentStep);
 	solution.Dump();
 	
-	return new CreationStatistics(){NodeCount=this.nodeCount};
+	return new CreationStatistics(){
+	    NodeCount=this.nodeCount, Solutions = this.allSolutions};
 }
 
 private Boolean SolveInternal(List<SolvingStep> currentSolution, SolvingStep currentStep)
@@ -346,5 +347,5 @@ class Move
 class CreationStatistics
 {
     public List<List<SolvingStep>> Solutions { get; set; }
-    public int nodeCount { get; set; }
+    public int NodeCount { get; set; }
 }
