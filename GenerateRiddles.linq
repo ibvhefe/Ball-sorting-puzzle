@@ -50,13 +50,13 @@ public CreationStatistics Create()
 		LastMove = new Move(){From=0,To=0}
 	};
 	var solution = new List<SolvingStep>();
-	SolveInternal(null, solution, currentStep);
+	SolveInternal(solution, currentStep);
 	solution.Dump();
 	
 	return new CreationStatistics(){NodeCount=this.nodeCount};
 }
 
-private Boolean SolveInternal(List<Queue<SolvingStep>> allSolutions, List<SolvingStep> currentSolution, SolvingStep currentStep)
+private Boolean SolveInternal(List<SolvingStep> currentSolution, SolvingStep currentStep)
 {
 	if (currentSolution.Any(step => AreEqual(step.Board, currentStep.Board)))
 	{
@@ -85,7 +85,7 @@ private Boolean SolveInternal(List<Queue<SolvingStep>> allSolutions, List<Solvin
 			if (IsMovePossible(currentStep.Board, from, to, fromColor, toColor))
 			{
 				var nextStep = CreateNextStep(currentStep, from, to);
-				if (SolveInternal(allSolutions, currentSolution, nextStep))
+				if (SolveInternal(currentSolution, nextStep))
 				{
 					return true;
 				}
