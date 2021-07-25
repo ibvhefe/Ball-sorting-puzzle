@@ -16,6 +16,7 @@ byte cupSize;
 byte cupCount;
 byte colorCount;
 int nodeCount;
+List<List<SolvingStep>> allSolutions;
 
 public RiddleCreator(byte cupSize, byte cupCount, byte colorCount)
 {
@@ -23,6 +24,7 @@ public RiddleCreator(byte cupSize, byte cupCount, byte colorCount)
     this.cupCount = cupCount;
     this.colorCount = colorCount;
     this.nodeCount = 0;
+    this.allSolutions = new List<List<SolvingStep>>();
 }
 
 public CreationStatistics Create()
