@@ -25,7 +25,7 @@ public RiddleCreator(byte cupSize, byte cupCount, byte colorCount)
     this.nodeCount = 0;
 }
 
-public void Create()
+public CreationStatistics Create()
 {
     var cups = new byte[cupCount, cupSize];
 	DistributeRandomly(cups);
@@ -43,7 +43,6 @@ public void Create()
 	//cups[2, 3] = 2;
 	//cups.Dump();
 	
-	
 	var currentStep = new SolvingStep()
 	{
 		Board = cups,
@@ -53,6 +52,8 @@ public void Create()
 	var solution = new List<SolvingStep>();
 	SolveInternal(null, solution, currentStep);
 	solution.Dump();
+	
+	return new CreationStatistics(){NodeCount=this.nodeCount};
 }
 
 private Boolean SolveInternal(List<Queue<SolvingStep>> allSolutions, List<SolvingStep> currentSolution, SolvingStep currentStep)
