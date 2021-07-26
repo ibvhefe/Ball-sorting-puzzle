@@ -48,7 +48,6 @@ public CreationStatistics Create()
 	var currentStep = new SolvingStep()
 	{
 		Board = cups,
-		MoveCount = 0,
 		LastMove = new Move(){From=0,To=0}
 	};
 	var solution = new List<SolvingStep>();
@@ -59,7 +58,7 @@ public CreationStatistics Create()
 	    NodeCount=this.nodeCount, Solutions = this.allSolutions};
 }
 
-private Boolean SolveInternal(List<SolvingStep> currentSolution, SolvingStep currentStep)
+private void SolveInternal(List<SolvingStep> currentSolution, SolvingStep currentStep)
 {
     // Avoid infinite loops.
 	if (currentSolution.Any(step => AreEqual(step.Board, currentStep.Board)))
@@ -222,7 +221,7 @@ private SolvingStep Clone(SolvingStep step)
 {
 	return new SolvingStep
 	{
-		Board = Clone(step.Board);
+		Board = Clone(step.Board),
 		LastMove = step.LastMove
 	};
 }
@@ -315,6 +314,7 @@ private byte[] CreateBallSequence(byte cupSize, byte colorCount)
 	}
 	return allBalls;
 }
+}
 
 static class RandomExtensions
 {
@@ -329,7 +329,6 @@ static class RandomExtensions
 			array[k] = temp;
 		}
 	}
-}
 }
 
 class SolvingStep
