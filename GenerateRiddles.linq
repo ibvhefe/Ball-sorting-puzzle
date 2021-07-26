@@ -2,13 +2,13 @@
 
 void Main()
 {
-    // Solve with constraint search.
+  // Solve with constraint search.
 	// count of possible solutions
 	// depth
 
     var riddleCreator = new RiddleCreator(4,3,2);
     var statistics = riddleCreator.Create();
-	statistics.Solutions.Dump();
+	  statistics.Solutions.Dump();
 }
 
 class RiddleCreator
