@@ -7,7 +7,8 @@ void Main()
 	// depth
 
     var riddleCreator = new RiddleCreator(4,3,2);
-    riddleCreator.Create();
+    var statistics = riddleCreator.Create();
+	statistics.Solutions.Dump();
 }
 
 class RiddleCreator
@@ -31,19 +32,6 @@ public CreationStatistics Create()
 {
     var cups = new byte[cupCount, cupSize];
 	DistributeRandomly(cups);
-	//cups[0,0]=0;
-	//cups[0,1]=0;
-	//cups[0,2]=0;
-	//cups[0, 3] = 0;
-	//cups[1, 0] = 2;
-	//cups[1, 1] = 1;
-	//cups[1, 2] = 1;
-	//cups[1, 3] = 1;
-	//cups[2, 0] = 1;
-	//cups[2, 1] = 2;
-	//cups[2, 2] = 2;
-	//cups[2, 3] = 2;
-	//cups.Dump();
 	
 	var currentStep = new SolvingStep()
 	{
@@ -52,7 +40,6 @@ public CreationStatistics Create()
 	};
 	var solution = new List<SolvingStep>();
 	SolveInternal(solution, currentStep);
-	solution.Dump();
 	
 	return new CreationStatistics(){
 	    NodeCount=this.nodeCount, Solutions = this.allSolutions};
