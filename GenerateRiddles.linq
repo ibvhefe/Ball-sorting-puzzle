@@ -8,8 +8,53 @@ void Main()
 
     var riddleCreator = new RiddleCreator(4,3,2);
     var statistics = riddleCreator.Create();
-	  statistics.Solutions.Dump();
+	statistics.Dump();
+	QualityAssurance.Check(statistics);
 }
+
+class SolutionComparer : IEqualityComparer<List<SolvingStep>>
+{
+	public bool Equals(List<SolvingStep> a, List<SolvingStep> b)
+	{
+		if (a.Count != b.Count)
+		{
+			return false;
+		}
+
+		for (var i = 0; i <= a.Count - 1; i++)
+		{
+			if (a[i].LastMove.From != b[i].LastMove.From)
+			{
+				return false;
+			}
+
+			if (a[i].LastMove.To != b[i].LastMove.To)
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	public int GetHashCode(List<SolvingStep> obj)
+	{
+		//var hash = obj.GetHashCode();
+		return obj.Count;
+	}
+}
+
+public static class QualityAssurance
+{
+	public static void Check(CreationStatistics statistics)
+	{
+		var count = statistics.Solutions.Count;
+		var distinctCount = statistics.Solutions.Distinct(new SolutionComparer()).Count();
+		(count == distinctCount).Dump();
+	}
+}
+
+
 
 class RiddleCreator
 {
@@ -33,6 +78,19 @@ public CreationStatistics Create()
     var cups = new byte[cupCount, cupSize];
 	DistributeRandomly(cups);
 	
+		//cups[0, 0] = 1;
+		//cups[0, 1] = 1;
+		//cups[0, 2] = 2;
+		//cups[0, 3] = 2;
+		//cups[1, 0] = 2;
+		//cups[1, 1] = 0;
+		//cups[1, 2] = 0;
+		//cups[1, 3] = 0;
+		//cups[2, 0] = 1;
+		//cups[2, 1] = 1;
+		//cups[2, 2] = 2;
+		//cups[2, 3] = 0;
+
 	var currentStep = new SolvingStep()
 	{
 		Board = cups,
@@ -47,20 +105,22 @@ public CreationStatistics Create()
 
 private void SolveInternal(List<SolvingStep> currentSolution, SolvingStep currentStep)
 {
-    // Avoid infinite loops.
+	this.nodeCount++;
+	
+	if (IsGoalReached(currentStep.Board))
+	{
+		currentSolution.Insert(0, currentStep);
+		this.allSolutions.Add(Clone(currentSolution));
+		return;
+	}
+		
+	// Avoid infinite loops.
 	if (currentSolution.Any(step => AreEqual(step.Board, currentStep.Board)))
 	{
 		return;
 	}
 	
 	currentSolution.Insert(0, currentStep);
-    this.nodeCount++;
-    
-	if (IsGoalReached(currentStep.Board))
-	{
-	    this.allSolutions.Add(Clone(currentSolution));
-		return;
-	}
 	
 	for(byte from=0;from<=cupCount-1;from++)
 	{
@@ -77,6 +137,7 @@ private void SolveInternal(List<SolvingStep> currentSolution, SolvingStep curren
 			{
 				var nextStep = CreateNextStep(currentStep, from, to);
 				SolveInternal(currentSolution, nextStep);
+				currentSolution.Remove(nextStep);
 			}
 		}
 	}
@@ -187,7 +248,7 @@ private byte GetUpmostColor(byte[,] cups, byte column)
 	return 0;
 }
 
-private Boolean IsGoalReached(byte[,] cups)
+public Boolean IsGoalReached(byte[,] cups)
 {
 	for (var i = 0; i <= cupCount - 1; i++)
 	{
@@ -213,7 +274,7 @@ private SolvingStep Clone(SolvingStep step)
 	};
 }
 
-private List<SolvingStep> Clone(List<SolvingStep> steps)
+public List<SolvingStep> Clone(List<SolvingStep> steps)
     {
         var clonedList = new List<SolvingStep>();
         foreach(var step in steps)
@@ -318,19 +379,19 @@ static class RandomExtensions
 	}
 }
 
-class SolvingStep
+public class SolvingStep
 {
 	public byte[,] Board { get; set; }
 	public Move LastMove { get; set; }
 }
 
-class Move
+public class Move
 {
 	public byte From { get; set; }
 	public byte To { get; set; }
 }
 
-class CreationStatistics
+public class CreationStatistics
 {
     public List<List<SolvingStep>> Solutions { get; set; }
     public int NodeCount { get; set; }
