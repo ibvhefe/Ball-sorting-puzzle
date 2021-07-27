@@ -1,0 +1,11 @@
+C:\Users\sebi\Desktop\ball_puzzle\Ball-sorting-puzzle\obj\Debug\netcoreapp2.1\Ball-sorting-puzzle.csprojAssemblyReference.cache
+C:\Users\sebi\Desktop\ball_puzzle\Ball-sorting-puzzle\obj\Debug\netcoreapp2.1\Ball-sorting-puzzle.csproj.CoreCompileInputs.cache
+C:\Users\sebi\Desktop\ball_puzzle\Ball-sorting-puzzle\obj\Debug\netcoreapp2.1\Ball-sorting-puzzle.AssemblyInfoInputs.cache
+C:\Users\sebi\Desktop\ball_puzzle\Ball-sorting-puzzle\obj\Debug\netcoreapp2.1\Ball-sorting-puzzle.AssemblyInfo.cs
+C:\Users\sebi\Desktop\ball_puzzle\Ball-sorting-puzzle\bin\Debug\netcoreapp2.1\Ball-sorting-puzzle.deps.json
+C:\Users\sebi\Desktop\ball_puzzle\Ball-sorting-puzzle\bin\Debug\netcoreapp2.1\Ball-sorting-puzzle.runtimeconfig.json
+C:\Users\sebi\Desktop\ball_puzzle\Ball-sorting-puzzle\bin\Debug\netcoreapp2.1\Ball-sorting-puzzle.runtimeconfig.dev.json
+C:\Users\sebi\Desktop\ball_puzzle\Ball-sorting-puzzle\bin\Debug\netcoreapp2.1\Ball-sorting-puzzle.dll
+C:\Users\sebi\Desktop\ball_puzzle\Ball-sorting-puzzle\bin\Debug\netcoreapp2.1\Ball-sorting-puzzle.pdb
+C:\Users\sebi\Desktop\ball_puzzle\Ball-sorting-puzzle\obj\Debug\netcoreapp2.1\Ball-sorting-puzzle.dll
+C:\Users\sebi\Desktop\ball_puzzle\Ball-sorting-puzzle\obj\Debug\netcoreapp2.1\Ball-sorting-puzzle.pdb
