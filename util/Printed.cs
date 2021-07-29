@@ -1,5 +1,10 @@
 class ConsolePrinter
 {
+  void Print(CreationStatistics creationStatistics)
+  {
+    Console.WriteLine($"Solution node count:{creationStatistics.SolutionNodeCount}, Node count: {creationStatistics.NodeCount}");
+  }
+  
   void Print(List<SolvingStep> solution)
   {
     for(var j=0; j<=solution.First().GetLength(1)-1; j++)
@@ -18,5 +23,14 @@ class ConsolePrinter
     }
     Console.WriteLine();
     }
+  }
+  
+  void RepeatChar(string character, int count)
+  {
+    for(var i=0; i<= count; i++)
+    {
+      Console.Write(character);
+    }
+    Console.WriteLine();
   }
 }
