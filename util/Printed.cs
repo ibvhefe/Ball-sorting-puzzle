@@ -5,6 +5,22 @@ class ConsolePrinter
     Console.WriteLine($"Solution node count:{creationStatistics.SolutionNodeCount}, Node count: {creationStatistics.NodeCount}");
   }
   
+  void Print(byte[,] array)
+  {
+    for(var i=0; i<= array.GetLength(1)-1; i++)
+    {
+      for(var j=0; j<=array.GetLength(0)-1; j++)
+      {
+        var content =array[i,j];
+        if(content>9)
+        {
+          Console.Write(" ");
+        }
+        Console.Write($"  {content}");
+      }
+    }
+  }
+  
   void Print(List<SolvingStep> solution)
   {
     for(var j=0; j<=solution.First().GetLength(1)-1; j++)
@@ -27,7 +43,7 @@ class ConsolePrinter
   
   void RepeatChar(string character, int count)
   {
-    for(var i=0; i<= count; i++)
+    for(var i=0; i<= count-1; i++)
     {
       Console.Write(character);
     }
