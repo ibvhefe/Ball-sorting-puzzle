@@ -2,7 +2,10 @@ class ConsolePrinter
 {
   void Print(CreationStatistics creationStatistics)
   {
+    Print(creationStatistics.Riddle);
     Console.WriteLine($"Solution node count:{creationStatistics.SolutionNodeCount}, Node count: {creationStatistics.NodeCount}");
+    Console.WriteLine($"Different solutions: {creationStatistics.Solutions.Count()}");
+    
   }
   
   void Print(byte[,] array)
