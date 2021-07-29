@@ -3,4 +3,5 @@ public class CreationStatistics
 {
     public List<List<SolvingStep>> Solutions { get; set; }
     public int NodeCount { get; set; }
+    public int SolutionNodeCount { get; set; }
 }
