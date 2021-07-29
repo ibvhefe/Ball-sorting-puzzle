@@ -46,7 +46,7 @@ class RiddleCreator
 		SolveInternal(solution, currentStep);
 		
 		return new CreationStatistics(){
-			NodeCount=this.nodeCount, Solutions = this.allSolutions};
+			NodeCount=this.nodeCount, Solutions = this.allSolutions, Riddle=cups};
 	}
 
 	private void SolveInternal(List<SolvingStep> currentSolution, SolvingStep currentStep)

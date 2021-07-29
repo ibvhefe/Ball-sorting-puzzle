@@ -13,7 +13,8 @@ namespace Ball_sorting_puzzle
                 var riddleCreator = new RiddleCreator(4,3,2);
                 var statistics = riddleCreator.Create();
                 //statistics.Dump();
-                QualityAssurance.Check(statistics);
+                //QualityAssurance.Check(statistics);
+                ConsolePrinter.Print(statistics);
         }
     }
 }
