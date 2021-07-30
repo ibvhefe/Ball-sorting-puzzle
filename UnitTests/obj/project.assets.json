@@ -1110,6 +1110,22 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XDocument.dll": {}
         }
+      },
+      "Ball-sorting-puzzle/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.1",
+        "dependencies": {
+          "MSTest.TestAdapter": "2.2.5",
+          "MSTest.TestFramework": "2.2.5",
+          "Microsoft.NET.Test.Sdk": "16.10.0",
+          "Microsoft.NETCore.App": "2.1.0"
+        },
+        "compile": {
+          "bin/placeholder/Ball-sorting-puzzle.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Ball-sorting-puzzle.dll": {}
+        }
       }
     }
   },
@@ -4637,10 +4653,16 @@
         "system.xml.xdocument.4.0.11.nupkg.sha512",
         "system.xml.xdocument.nuspec"
       ]
+    },
+    "Ball-sorting-puzzle/1.0.0": {
+      "type": "project",
+      "path": "../Ball-sorting-puzzle.csproj",
+      "msbuildProject": "../Ball-sorting-puzzle.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.1": [
+      "Ball-sorting-puzzle >= 1.0.0",
       "MSTest.TestAdapter >= 2.2.5",
       "MSTest.TestFramework >= 2.2.5",
       "Microsoft.NET.Test.Sdk >= 16.10.0",
@@ -4654,11 +4676,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\sebi\\Desktop\\ball_puzzle\\Ball-sorting-puzzle\\Ball-sorting-puzzle.csproj",
-      "projectName": "Ball-sorting-puzzle",
-      "projectPath": "C:\\Users\\sebi\\Desktop\\ball_puzzle\\Ball-sorting-puzzle\\Ball-sorting-puzzle.csproj",
+      "projectUniqueName": "C:\\Users\\sebi\\Desktop\\ball_puzzle\\Ball-sorting-puzzle\\UnitTests\\UnitTests.csproj",
+      "projectName": "UnitTests",
+      "projectPath": "C:\\Users\\sebi\\Desktop\\ball_puzzle\\Ball-sorting-puzzle\\UnitTests\\UnitTests.csproj",
       "packagesPath": "C:\\Users\\sebi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\sebi\\Desktop\\ball_puzzle\\Ball-sorting-puzzle\\obj\\",
+      "outputPath": "C:\\Users\\sebi\\Desktop\\ball_puzzle\\Ball-sorting-puzzle\\UnitTests\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -4676,7 +4698,11 @@
       },
       "frameworks": {
         "netcoreapp2.1": {
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\sebi\\Desktop\\ball_puzzle\\Ball-sorting-puzzle\\Ball-sorting-puzzle.csproj": {
+              "projectPath": "C:\\Users\\sebi\\Desktop\\ball_puzzle\\Ball-sorting-puzzle\\Ball-sorting-puzzle.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -4701,6 +4727,7 @@
             "version": "[16.10.0, )"
           },
           "Microsoft.NETCore.App": {
+            "suppressParent": "All",
             "target": "Package",
             "version": "[2.1.0, )",
             "autoReferenced": true

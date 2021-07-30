@@ -9,3 +9,10 @@ C:\Users\sebi\Desktop\ball_puzzle\Ball-sorting-puzzle\bin\Debug\netcoreapp2.1\Ba
 C:\Users\sebi\Desktop\ball_puzzle\Ball-sorting-puzzle\bin\Debug\netcoreapp2.1\Ball-sorting-puzzle.pdb
 C:\Users\sebi\Desktop\ball_puzzle\Ball-sorting-puzzle\obj\Debug\netcoreapp2.1\Ball-sorting-puzzle.dll
 C:\Users\sebi\Desktop\ball_puzzle\Ball-sorting-puzzle\obj\Debug\netcoreapp2.1\Ball-sorting-puzzle.pdb
+C:\Users\sebi\Desktop\ball_puzzle\Ball-sorting-puzzle\bin\Debug\netcoreapp2.1\testhost.exe
+C:\Users\sebi\Desktop\ball_puzzle\Ball-sorting-puzzle\bin\Debug\netcoreapp2.1\testhost.dll
+C:\Users\sebi\Desktop\ball_puzzle\Ball-sorting-puzzle\bin\Debug\netcoreapp2.1\Microsoft.TestPlatform.PlatformAbstractions.dll
+C:\Users\sebi\Desktop\ball_puzzle\Ball-sorting-puzzle\bin\Debug\netcoreapp2.1\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+C:\Users\sebi\Desktop\ball_puzzle\Ball-sorting-puzzle\bin\Debug\netcoreapp2.1\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+C:\Users\sebi\Desktop\ball_puzzle\Ball-sorting-puzzle\bin\Debug\netcoreapp2.1\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+C:\Users\sebi\Desktop\ball_puzzle\Ball-sorting-puzzle\bin\Debug\netcoreapp2.1\Microsoft.TestPlatform.AdapterUtilities.dll

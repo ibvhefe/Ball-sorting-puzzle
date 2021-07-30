@@ -1,0 +1,4 @@
+C:\Users\sebi\Desktop\ball_puzzle\Ball-sorting-puzzle\UnitTests\obj\Debug\netcoreapp2.1\UnitTests.csprojAssemblyReference.cache
+C:\Users\sebi\Desktop\ball_puzzle\Ball-sorting-puzzle\UnitTests\obj\Debug\netcoreapp2.1\UnitTests.csproj.CoreCompileInputs.cache
+C:\Users\sebi\Desktop\ball_puzzle\Ball-sorting-puzzle\UnitTests\obj\Debug\netcoreapp2.1\UnitTests.AssemblyInfoInputs.cache
+C:\Users\sebi\Desktop\ball_puzzle\Ball-sorting-puzzle\UnitTests\obj\Debug\netcoreapp2.1\UnitTests.AssemblyInfo.cs
