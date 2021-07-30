@@ -6,15 +6,17 @@ namespace Ball_sorting_puzzle
     {
         static void Main(string[] args)
         {
-                // Solve with constraint search.
-                // count of possible solutions
-                // depth
+            // Init.
+            byte cupSize = 4;
+            byte cupCount = 3;
+            byte colorCount = 2;
+            var riddleCreator = new RiddleCreator(cupSize, cupCount, colorCount);
+            var riddleSolver = new RiddleSolver(cupSize, cupCount, colorCount);
 
-                var riddleCreator = new RiddleCreator(4,3,2);
-                var statistics = riddleCreator.Create();
-                //statistics.Dump();
-                //QualityAssurance.Check(statistics);
-                ConsolePrinter.Print(statistics);
+            // Workflow steps.
+            var randomRiddle = riddleCreator.Create();
+            var gameTree = riddleSolver.Solve(randomRiddle);  
+            ConsolePrinter.Print(gameTree);
         }
     }
 }

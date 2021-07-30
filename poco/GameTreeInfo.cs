@@ -1,5 +1,6 @@
 using System.Collections.Generic;
-public class CreationStatistics
+
+public class GameTreeInfo
 {
     public byte[,] Riddle { get; set; }
     public List<List<SolvingStep>> Solutions { get; set; }

@@ -4,13 +4,13 @@ using System.Linq;
 
 public static class ConsolePrinter
 {
-  public static void Print(CreationStatistics creationStatistics)
+  public static void Print(GameTreeInfo gameTreeInfo)
   {
-    Print(creationStatistics.Riddle);
-    Console.WriteLine($"Node count: {creationStatistics.NodeCount}");
-    Console.WriteLine($"Solution node count:{creationStatistics.SolutionNodeCount}");
-    Console.WriteLine($"Different solutions: {creationStatistics.Solutions.Count}");
-    foreach(var solution in creationStatistics.Solutions)
+    Print(gameTreeInfo.Riddle);
+    Console.WriteLine($"Node count: {gameTreeInfo.NodeCount}");
+    Console.WriteLine($"Solution node count:{gameTreeInfo.SolutionNodeCount}");
+    Console.WriteLine($"Different solutions: {gameTreeInfo.Solutions.Count}");
+    foreach(var solution in gameTreeInfo.Solutions)
     {
       Print(solution);
     }

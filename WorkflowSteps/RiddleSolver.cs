@@ -2,41 +2,19 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 
-class RiddleCreator
+public class RiddleSolver : RiddleBase
 {
-	byte cupSize;
-	byte cupCount;
-	byte colorCount;
 	int nodeCount;
 	List<List<SolvingStep>> allSolutions;
 
-	public RiddleCreator(byte cupSize, byte cupCount, byte colorCount)
+	public RiddleSolver(byte cupSize, byte cupCount, byte colorCount) : base(cupSize,cupCount,colorCount)
 	{
-		this.cupSize = cupSize;
-		this.cupCount = cupCount;
-		this.colorCount = colorCount;
 		this.nodeCount = 0;
 		this.allSolutions = new List<List<SolvingStep>>();
 	}
 
-	public CreationStatistics Create()
+	public GameTreeInfo Solve(byte[,] cups)
 	{
-		var cups = new byte[cupCount, cupSize];
-		DistributeRandomly(cups);
-		
-			//cups[0, 0] = 1;
-			//cups[0, 1] = 1;
-			//cups[0, 2] = 2;
-			//cups[0, 3] = 2;
-			//cups[1, 0] = 2;
-			//cups[1, 1] = 0;
-			//cups[1, 2] = 0;
-			//cups[1, 3] = 0;
-			//cups[2, 0] = 1;
-			//cups[2, 1] = 1;
-			//cups[2, 2] = 2;
-			//cups[2, 3] = 0;
-
 		var currentStep = new SolvingStep()
 		{
 			Board = cups,
@@ -45,8 +23,12 @@ class RiddleCreator
 		var solution = new List<SolvingStep>();
 		SolveInternal(solution, currentStep);
 		
-		return new CreationStatistics(){
-			NodeCount=this.nodeCount, Solutions = this.allSolutions, Riddle=cups};
+		return new GameTreeInfo()
+		{
+			NodeCount=this.nodeCount, 
+			Solutions = this.allSolutions, 
+			Riddle=cups
+		};
 	}
 
 	private void SolveInternal(List<SolvingStep> currentSolution, SolvingStep currentStep)
@@ -110,21 +92,8 @@ class RiddleCreator
 		var clone = Clone(currentStep);
 		clone.LastMove = new Move() { From = from, To = to };
 		var pulledColor = Pull(clone.Board, from);
-		Push(clone.Board, to, pulledColor);
+		Push(clone.Board, pulledColor, to);
 		return clone;
-	}
-
-	private void Push(byte[,] cups, byte to, byte toColor)
-	{
-		for (var i = 0; i <= cupSize-1; i++)
-		{
-			var currentColor = cups[to, i];
-			if (currentColor == 0)
-			{
-				cups[to, i] = toColor;
-				return;
-			}
-		}
 	}
 
 	private byte Pull(byte[,] cups, byte from)
@@ -242,70 +211,5 @@ class RiddleCreator
 			}
 		}
 		return clone;
-	}
-
-	// Define other methods and classes here
-	/*
-
-	^  1,0,4,0
-	|  1,3,4,0
-	|  1,2,3,0
-	|  1,3,3,0
-	1  0 -->
-
-	*/
-
-	void DistributeRandomly(byte[,] cups)
-	{
-		// Create a random ball sequence.
-		var ballSequence = CreateBallSequence(cupSize, colorCount);
-		Shuffle(ballSequence);
-		var ballStack = new Stack<byte>(ballSequence);
-		
-		// Always take one ball and put it at a random cup.
-		var rndCup = new Random();
-		while(ballStack.Any())
-		{
-			var ball = ballStack.Pop();
-			var cup = rndCup.Next(cupCount);
-			while(!Put(cups, ball, cup))
-			{
-				cup = rndCup.Next(cupCount);
-			}
-		}
-	}
-
-	private Boolean Put(byte[,] cups, byte cupColor, int column)
-	{
-		for(byte i=0; i<cupSize; i++)
-		{
-			if(cups[column, i] == 0)
-			{
-				cups[column, i] = cupColor;
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private void Shuffle(byte[] array)
-	{
-		var rng = new Random();
-		rng.Shuffle(array);
-	}
-
-	private byte[] CreateBallSequence(byte cupSize, byte colorCount)
-	{
-		var allBalls = new byte[colorCount * cupSize];
-		var i = 0;
-		for (byte c = 0; c < colorCount; c++)
-		{
-			for (byte s = 0; s < cupSize; s++)
-			{
-				allBalls[i] = (byte)(c + 1);
-				i++;
-			}
-		}
-		return allBalls;
 	}
 }
