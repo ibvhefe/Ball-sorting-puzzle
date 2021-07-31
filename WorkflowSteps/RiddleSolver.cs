@@ -4,13 +4,16 @@ using System.Linq;
 
 public class RiddleSolver : RiddleBase
 {
-	int nodeCount;
 	List<List<SolvingStep>> allSolutions;
+	List<byte[,]> visitedNodes;
+
+	List<byte[,]> deadendNodes;
 
 	public RiddleSolver(byte cupSize, byte cupCount, byte colorCount) : base(cupSize,cupCount,colorCount)
 	{
-		this.nodeCount = 0;
+		this.visitedNodes = new List<byte[,]>();
 		this.allSolutions = new List<List<SolvingStep>>();
+		this.deadendNodes = new List<byte[,]>();
 	}
 
 	public GameTreeInfo Solve(byte[,] cups)
@@ -25,29 +28,29 @@ public class RiddleSolver : RiddleBase
 		
 		return new GameTreeInfo()
 		{
-			NodeCount=this.nodeCount, 
+			NodeCount=this.visitedNodes.Count, 
 			Solutions = this.allSolutions, 
 			Riddle=cups
 		};
 	}
 
 	private void SolveInternal(List<SolvingStep> currentSolution, SolvingStep currentStep)
-	{
-		this.nodeCount++;
-		
+	{		
 		if (IsGoalReached(currentStep.Board))
 		{
 			currentSolution.Insert(0, currentStep);
 			this.allSolutions.Add(Clone(currentSolution));
+			visitedNodes.Add(currentStep.Board);
 			return;
 		}
 			
 		// Avoid infinite loops.
-		if (currentSolution.Any(step => AreEqual(step.Board, currentStep.Board)))
+		if (visitedNodes.Any(step => AreEqual(step, currentStep.Board)))
 		{
 			return;
 		}
 		
+		visitedNodes.Add(currentStep.Board);
 		currentSolution.Insert(0, currentStep);
 		
 		for(byte from=0;from<=cupCount-1;from++)
