@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 
-class RiddleCreator : RiddleBase
+public class RiddleCreator : RiddleBase
 {
 	public RiddleCreator(byte cupSize, byte cupCount, byte colorCount) : base(cupSize,cupCount,colorCount)
 	{

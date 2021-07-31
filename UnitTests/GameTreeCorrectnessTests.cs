@@ -5,7 +5,7 @@ using System.Linq;
 namespace UnitTests
 {
     [TestClass]
-    public class UnitTest1
+    public class GameTreeCorrectnessTests
     {
         [TestMethod]
         public void NoDuplicateSolutions()
