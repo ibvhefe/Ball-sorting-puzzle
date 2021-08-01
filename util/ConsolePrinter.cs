@@ -8,7 +8,7 @@ public static class ConsolePrinter
   {
     Print(gameTreeInfo.Riddle);
     Console.WriteLine($"Node count: {gameTreeInfo.NodeCount}");
-    Console.WriteLine($"Solution node count:{gameTreeInfo.SolutionNodeCount}");
+    Console.WriteLine($"Solution node count: {gameTreeInfo.SolutionNodeCount}");
     Console.WriteLine($"Different solutions: {gameTreeInfo.Solutions.Count}");
     foreach(var solution in gameTreeInfo.Solutions)
     {

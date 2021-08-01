@@ -6,7 +6,6 @@ public class RiddleSolver : RiddleBase
 {
 	List<List<SolvingStep>> allSolutions;
 	List<byte[,]> visitedNodes;
-
 	List<byte[,]> deadendNodes;
 
 	public RiddleSolver(byte cupSize, byte cupCount, byte colorCount) : base(cupSize,cupCount,colorCount)
@@ -30,6 +29,7 @@ public class RiddleSolver : RiddleBase
 		{
 			NodeCount=this.visitedNodes.Count, 
 			Solutions = this.allSolutions, 
+			SolutionNodeCount = this.allSolutions.Select(s=>s.Count()).Sum(), 
 			Riddle=cups
 		};
 	}
