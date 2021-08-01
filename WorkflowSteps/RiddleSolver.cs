@@ -29,7 +29,7 @@ public class RiddleSolver : RiddleBase
 		{
 			NodeCount=this.visitedNodes.Count, 
 			Solutions = this.allSolutions, 
-			SolutionNodeCount = this.allSolutions.Select(s=>s.Count()).Sum(), 
+			SolutionNodeCount = GetSolutionNodeCount(this.allSolutions), 
 			Riddle=cups
 		};
 	}
@@ -72,6 +72,15 @@ public class RiddleSolver : RiddleBase
 				}
 			}
 		}
+	}
+
+	private int GetSolutionNodeCount(List<List<SolvingStep>> solutions)
+	{
+		return solutions
+						.SelectMany(sol => sol)
+						.Select(s => s.Board)
+						.Distinct(new BoardComparer(this.cupCount, this.cupSize))
+						.Count();
 	}
 
 	private Boolean AreEqual(byte[,] a, byte[,] b)
