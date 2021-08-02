@@ -12,8 +12,10 @@ public static class ConsolePrinter
     Console.WriteLine($"Different solutions: {gameTreeInfo.Solutions.Count}");
     foreach(var solution in gameTreeInfo.Solutions)
     {
-      Print(solution);
+      Print(solution.Select(s => s.Board).ToList());
     }
+    Console.WriteLine($"Dead end node count: {gameTreeInfo.DeadendNodeCount}");
+    Print(gameTreeInfo.DeadendNodes);
   }
   
   public static void Print(byte[,] array)
@@ -33,15 +35,15 @@ public static class ConsolePrinter
     }
   }
   
-  public static void Print(List<SolvingStep> solution)
+  public static void Print(List<byte[,]> boards)
   {
-    for(var j=solution.First().Board.GetLength(1)-1; j>=0; j--)
+    for(var j=boards.First().GetLength(1)-1; j>=0; j--)
     {
-      for(var s=solution.Count-1; s>=0; s--)
+      for(var s=boards.Count-1; s>=0; s--)
       {
-        for(var i=0; i<=solution.First().Board.GetLength(0)-1; i++)
+        for(var i=0; i<=boards.First().GetLength(0)-1; i++)
         {
-          var content = solution[s].Board[i,j];
+          var content = boards[s][i,j];
           if(content>9)
           {
             Console.Write(" ");

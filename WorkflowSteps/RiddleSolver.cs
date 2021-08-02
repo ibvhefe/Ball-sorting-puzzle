@@ -6,13 +6,11 @@ public class RiddleSolver : RiddleBase
 {
 	List<List<SolvingStep>> allSolutions;
 	List<byte[,]> visitedNodes;
-	List<byte[,]> deadendNodes;
 
 	public RiddleSolver(byte cupSize, byte cupCount, byte colorCount) : base(cupSize,cupCount,colorCount)
 	{
 		this.visitedNodes = new List<byte[,]>();
 		this.allSolutions = new List<List<SolvingStep>>();
-		this.deadendNodes = new List<byte[,]>();
 	}
 
 	public GameTreeInfo Solve(byte[,] cups)
@@ -25,11 +23,15 @@ public class RiddleSolver : RiddleBase
 		var solution = new List<SolvingStep>();
 		SolveInternal(solution, currentStep);
 		
+		var distinctSolutionNodes = GetDistinctSolutionNodes(this.allSolutions);
+		var deadendNodes = GetDeadendNodes(distinctSolutionNodes);
 		return new GameTreeInfo()
 		{
 			NodeCount=this.visitedNodes.Count, 
 			Solutions = this.allSolutions, 
-			SolutionNodeCount = GetSolutionNodeCount(this.allSolutions), 
+			SolutionNodeCount = distinctSolutionNodes.Count, 
+			DeadendNodes = deadendNodes,
+			DeadendNodeCount = deadendNodes.Count,
 			Riddle=cups
 		};
 	}
@@ -74,13 +76,20 @@ public class RiddleSolver : RiddleBase
 		}
 	}
 
-	private int GetSolutionNodeCount(List<List<SolvingStep>> solutions)
+	private List<byte[,]> GetDeadendNodes(List<byte[,]> distinctSolutionNodes)
+	{
+		return this.visitedNodes
+			.Except(distinctSolutionNodes, new BoardComparer(this.cupCount, this.cupSize))
+			.ToList();
+	}
+
+	private List<byte[,]> GetDistinctSolutionNodes(List<List<SolvingStep>> solutions)
 	{
 		return solutions
 						.SelectMany(sol => sol)
 						.Select(s => s.Board)
 						.Distinct(new BoardComparer(this.cupCount, this.cupSize))
-						.Count();
+						.ToList();
 	}
 
 	private Boolean AreEqual(byte[,] a, byte[,] b)
