@@ -15,7 +15,10 @@ public static class ConsolePrinter
       Print(solution.Select(s => s.Board).ToList());
     }
     Console.WriteLine($"Dead end node count: {gameTreeInfo.DeadendNodeCount}");
-    Print(gameTreeInfo.DeadendNodes);
+    if(gameTreeInfo.DeadendNodeCount>0)
+    {
+      Print(gameTreeInfo.DeadendNodes);
+    }
   }
   
   public static void Print(byte[,] array)

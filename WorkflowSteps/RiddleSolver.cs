@@ -5,12 +5,12 @@ using System.Linq;
 public class RiddleSolver : RiddleBase
 {
 	List<List<SolvingStep>> allSolutions;
-	List<byte[,]> visitedNodes;
+	List<SolvingStep> visitedNodes;
 	List<byte[,]> deadendNodes;
 
 	public RiddleSolver(byte cupSize, byte cupCount, byte colorCount) : base(cupSize,cupCount,colorCount)
 	{
-		this.visitedNodes = new List<byte[,]>();
+		this.visitedNodes = new List<SolvingStep>();
 		this.allSolutions = new List<List<SolvingStep>>();
 		this.deadendNodes = new List<byte[,]>();
 	}
@@ -24,33 +24,90 @@ public class RiddleSolver : RiddleBase
 		};
 		var solution = new List<SolvingStep>();
 		SolveInternal(solution, currentStep);
-		
+		var distinctSolutionNodes = FlattenNodesDistinct(this.allSolutions);
+		this.visitedNodes.Clear();
+		CollectDeadendNodes(distinctSolutionNodes, Clone(currentStep));
+
 		return new GameTreeInfo()
 		{
 			NodeCount=this.visitedNodes.Count, 
 			Solutions = this.allSolutions, 
-			SolutionNodeCount = GetSolutionNodeCount(this.allSolutions), 
+			SolutionNodeCount = distinctSolutionNodes.Count,
+			DeadendNodes = this.deadendNodes,
+			DeadendNodeCount = this.deadendNodes.Count,
 			Riddle=cups
 		};
 	}
 
-	private Boolean SolveInternal(List<SolvingStep> currentSolution, SolvingStep currentStep)
+	// true, if a deadend is reached;
+	// false, otherwise
+	private void CollectDeadendNodes(List<byte[,]> solutionNodes, SolvingStep currentStep)
+	{		
+		if(solutionNodes.Contains(currentStep.Board))
+		{
+			currentStep.NodeType = NodeType.Solution;
+			return;
+		}
+
+		// Avoid infinite loops.
+		var correspondingVisitedNode = visitedNodes.FirstOrDefault(step => AreEqual(step.Board, currentStep.Board)); 
+		if (correspondingVisitedNode != null)
+		{
+			currentStep.NodeType = correspondingVisitedNode.NodeType;
+			return;
+		}
+
+		visitedNodes.Add(currentStep);
+
+		var nodeType = NodeType.Deadend; 
+		for(byte from=0;from<=cupCount-1;from++)
+		{
+			var fromColor = GetUpmostColor(currentStep.Board,from);
+			if(fromColor==0)
+			{
+				continue;
+			}
+			
+			for(byte to=0;to<=cupCount-1;to++)
+			{
+				var toColor = GetUpmostColor(currentStep.Board, to);
+				if (IsMovePossible(currentStep.Board, from, to, fromColor, toColor))
+				{
+					var nextStep = CreateNextStep(currentStep, from, to);
+					CollectDeadendNodes(solutionNodes, nextStep);
+					if(nextStep.NodeType != NodeType.Deadend)
+					{
+						nodeType = NodeType.Unknown;
+					}
+				}
+			}
+		}
+
+		currentStep.NodeType = nodeType;
+		if(nodeType == NodeType.Deadend)
+		{
+			this.deadendNodes.Add(currentStep.Board);
+		}
+		visitedNodes.Add(currentStep);
+	}
+
+	private void SolveInternal(List<SolvingStep> currentSolution, SolvingStep currentStep)
 	{		
 		if (IsGoalReached(currentStep.Board))
 		{
 			currentSolution.Insert(0, currentStep);
 			this.allSolutions.Add(Clone(currentSolution));
-			visitedNodes.Add(currentStep.Board);
-			return true;
+			visitedNodes.Add(currentStep);
+			return;
 		}
 			
 		// Avoid infinite loops.
-		if (visitedNodes.Any(step => AreEqual(step, currentStep.Board)))
+		if (visitedNodes.Any(step => AreEqual(step.Board, currentStep.Board)))
 		{
-		  return allSolutions.SelectMany(s => s ).Contains(step);
+		  return;
 		}
 		
-		visitedNodes.Add(currentStep.Board);
+		visitedNodes.Add(currentStep);
 		currentSolution.Insert(0, currentStep);
 		
 		for(byte from=0;from<=cupCount-1;from++)
@@ -61,28 +118,26 @@ public class RiddleSolver : RiddleBase
 				continue;
 			}
 			
-			var isDeadendNode = false;
 			for(byte to=0;to<=cupCount-1;to++)
 			{
 				var toColor = GetUpmostColor(currentStep.Board, to);
 				if (IsMovePossible(currentStep.Board, from, to, fromColor, toColor))
 				{
 					var nextStep = CreateNextStep(currentStep, from, to);
-					isDeadendNode = isDeadendNode && SolveInternal(currentSolution, nextStep);
+					SolveInternal(currentSolution, nextStep);
 					currentSolution.Remove(nextStep);
 				}
 			}
-			return isDeadendNode;
 		}
 	}
 
-	private int GetSolutionNodeCount(List<List<SolvingStep>> solutions)
+	private List<byte[,]> FlattenNodesDistinct(List<List<SolvingStep>> solutions)
 	{
 		return solutions
 						.SelectMany(sol => sol)
 						.Select(s => s.Board)
 						.Distinct(new BoardComparer(this.cupCount, this.cupSize))
-						.Count();
+						.ToList();
 	}
 
 	private Boolean AreEqual(byte[,] a, byte[,] b)
@@ -199,7 +254,8 @@ public class RiddleSolver : RiddleBase
 		return new SolvingStep
 		{
 			Board = Clone(step.Board),
-			LastMove = step.LastMove
+			LastMove = step.LastMove,
+			NodeType = step.NodeType
 		};
 	}
 
