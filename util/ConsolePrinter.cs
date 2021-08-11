@@ -4,17 +4,47 @@ using System.Linq;
 
 public static class ConsolePrinter
 {
+  private static Boolean debugMode = false;
+  public static void SetDebugMode()
+  {
+    debugMode = true;
+  }
+
+  private static void Write(String content)
+  {
+    if(debugMode)
+    {
+      System.Diagnostics.Debug.Write(content);
+    }
+    else
+    {
+      Console.Write(content);
+    }
+  }
+
+  private static void WriteLine(String content)
+  {
+    if(debugMode)
+    {
+      System.Diagnostics.Debug.WriteLine(content);
+    }
+    else
+    {
+      Console.WriteLine(content);
+    }
+  }
+
   public static void Print(GameTreeInfo gameTreeInfo)
   {
     Print(gameTreeInfo.Riddle);
-    Console.WriteLine($"Node count: {gameTreeInfo.NodeCount}");
-    Console.WriteLine($"Solution node count: {gameTreeInfo.SolutionNodeCount}");
-    Console.WriteLine($"Different solutions: {gameTreeInfo.Solutions.Count}");
+    WriteLine($"Node count: {gameTreeInfo.NodeCount}");
+    WriteLine($"Solution node count: {gameTreeInfo.SolutionNodeCount}");
+    WriteLine($"Different solutions: {gameTreeInfo.Solutions.Count}");
     foreach(var solution in gameTreeInfo.Solutions)
     {
       Print(solution.Select(s => s.Board).ToList());
     }
-    Console.WriteLine($"Dead end node count: {gameTreeInfo.DeadendNodeCount}");
+    WriteLine($"Dead end node count: {gameTreeInfo.DeadendNodeCount}");
     if(gameTreeInfo.DeadendNodeCount>0)
     {
       Print(gameTreeInfo.DeadendNodes);
@@ -30,11 +60,11 @@ public static class ConsolePrinter
         var content =array[j,i];
         if(content>9)
         {
-          Console.Write(" ");
+          Write(" ");
         }
-        Console.Write($"  {content}");
+        Write($"  {content}");
       }
-      Console.WriteLine();
+      WriteLine("");
     }
   }
   
@@ -49,13 +79,13 @@ public static class ConsolePrinter
           var content = boards[s][i,j];
           if(content>9)
           {
-            Console.Write(" ");
+            Write(" ");
           }
-          Console.Write($"  {content}");
+          Write($"  {content}");
         }
-        Console.Write("   ");
+        Write("   ");
       }
-      Console.WriteLine();
+      WriteLine("");
     }
     RepeatChar("-",100);
   }
@@ -64,8 +94,8 @@ public static class ConsolePrinter
   {
     for(var i=0; i<= count-1; i++)
     {
-      Console.Write(character);
+      Write(character);
     }
-    Console.WriteLine();
+    WriteLine("");
   }
 }
