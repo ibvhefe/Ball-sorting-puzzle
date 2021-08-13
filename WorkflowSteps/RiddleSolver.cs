@@ -43,10 +43,9 @@ public class RiddleSolver : RiddleBase
 	// false, otherwise
 	private void CollectDeadendNodes(List<byte[,]> solutionNodes, SolvingStep currentStep)
 	{		
-		if(solutionNodes.Contains(currentStep.Board))
+		if(solutionNodes.Contains(currentStep.Board, new BoardComparer(this.cupCount, this.cupSize)))
 		{
 			currentStep.NodeType = NodeType.Solution;
-			return;
 		}
 
 		// Avoid infinite loops.
