@@ -43,11 +43,6 @@ public class RiddleSolver : RiddleBase
 	// false, otherwise
 	private void CollectDeadendNodes(List<byte[,]> solutionNodes, SolvingStep currentStep)
 	{		
-		if(solutionNodes.Contains(currentStep.Board, new BoardComparer(this.cupCount, this.cupSize)))
-		{
-			currentStep.NodeType = NodeType.Solution;
-		}
-
 		// Avoid infinite loops.
 		var correspondingVisitedNode = visitedNodes.FirstOrDefault(step => AreEqual(step.Board, currentStep.Board)); 
 		if (correspondingVisitedNode != null)
@@ -57,8 +52,13 @@ public class RiddleSolver : RiddleBase
 		}
 
 		visitedNodes.Add(currentStep);
-
-		var nodeType = NodeType.Deadend; 
+ 
+ 		var nodeType = NodeType.Deadend;
+		if(solutionNodes.Contains(currentStep.Board, new BoardComparer(this.cupCount, this.cupSize)))
+		{
+			nodeType = NodeType.Solution;
+		}		
+		
 		for(byte from=0;from<=cupCount-1;from++)
 		{
 			var fromColor = GetUpmostColor(currentStep.Board,from);
@@ -74,6 +74,11 @@ public class RiddleSolver : RiddleBase
 				{
 					var nextStep = CreateNextStep(currentStep, from, to);
 					CollectDeadendNodes(solutionNodes, nextStep);
+					if(nodeType == NodeType.Solution)
+					{
+						continue;
+					}
+
 					if(nextStep.NodeType != NodeType.Deadend)
 					{
 						nodeType = NodeType.Unknown;
@@ -87,7 +92,6 @@ public class RiddleSolver : RiddleBase
 		{
 			this.deadendNodes.Add(currentStep.Board);
 		}
-		visitedNodes.Add(currentStep);
 	}
 
 	private void SolveInternal(List<SolvingStep> currentSolution, SolvingStep currentStep)

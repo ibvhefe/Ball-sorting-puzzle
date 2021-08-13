@@ -59,7 +59,8 @@ namespace UnitTests
             ConsolePrinter.SetDebugMode();
             ConsolePrinter.Print(gameTree);
 
-            Assert.AreEqual(2, gameTree.Solutions.Count);
+            Assert.AreEqual(4, gameTree.Solutions.Count);
+            Assert.AreEqual(1, gameTree.DeadendNodeCount);
         }
     }
 }
