@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-public class BoardComparer : IEqualityComparer<byte[,]>
+public class BoardComparer : IEqualityComparer<SolvingStep>
 {
     byte cupCount;
     byte cupSize;
@@ -10,13 +10,13 @@ public class BoardComparer : IEqualityComparer<byte[,]>
         this.cupSize = cupSize;
     }
 
-	public bool Equals(byte[,] a, byte[,] b)
+	public bool Equals(SolvingStep a, SolvingStep b)
 	{
 		for (byte i = 0; i <= this.cupCount-1; i++)
 		{
 			for (byte j = 0; j <= this.cupSize-1; j++)
 			{
-				if (a[i, j] != b[i, j])
+				if (a.Board[i, j] != b.Board[i, j])
 				{
 					return false;
 				}
@@ -26,8 +26,16 @@ public class BoardComparer : IEqualityComparer<byte[,]>
 		return true;
 	}
 
-	public int GetHashCode(byte[,] obj)
+	public int GetHashCode(SolvingStep obj)
 	{
-		return obj[0,0];
+		unchecked // Overflow is fine, just wrap
+		{
+			int hash = 17;
+			for(var i=0;i<this.cupSize;i++)
+			{
+				hash = hash * 23 + obj.Board[0,i].GetHashCode();
+			}
+			return hash;
+		}
 	}
 }

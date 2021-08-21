@@ -6,13 +6,13 @@ public class RiddleSolver : RiddleBase
 {
 	List<List<SolvingStep>> allSolutions;
 	HashSet<SolvingStep> visitedNodes;
-	HashSet<byte[,]> deadendNodes;
+	HashSet<SolvingStep> deadendNodes;
 
 	public RiddleSolver(byte cupSize, byte cupCount, byte colorCount) : base(cupSize,cupCount,colorCount)
 	{
-		this.visitedNodes = new HashSet<SolvingStep>();
+		this.visitedNodes = new HashSet<SolvingStep>(new BoardComparer(this.cupCount, this.cupSize));
 		this.allSolutions = new List<List<SolvingStep>>();
-		this.deadendNodes = new HashSet<byte[,]>();
+		this.deadendNodes = new HashSet<SolvingStep>(new BoardComparer(this.cupCount, this.cupSize));
 	}
 
 	public GameTreeInfo Solve(byte[,] cups)
@@ -26,7 +26,7 @@ public class RiddleSolver : RiddleBase
 		SolveInternal(solution, currentStep);
 		var distinctSolutionNodes = FlattenNodesDistinct(this.allSolutions);
 		this.visitedNodes.Clear();
-		CollectDeadendNodes(distinctSolutionNodes, Clone(currentStep));
+		//CollectDeadendNodes(distinctSolutionNodes, Clone(currentStep));
 
 		return new GameTreeInfo()
 		{
@@ -39,60 +39,60 @@ public class RiddleSolver : RiddleBase
 		};
 	}
 
-	// true, if a deadend is reached;
-	// false, otherwise
-	private void CollectDeadendNodes(List<byte[,]> solutionNodes, SolvingStep currentStep)
-	{		
-		// Avoid infinite loops.
-		var correspondingVisitedNode = visitedNodes.FirstOrDefault(step => AreEqual(step.Board, currentStep.Board)); 
-		if (correspondingVisitedNode != null)
-		{
-			currentStep.NodeType = correspondingVisitedNode.NodeType;
-			return;
-		}
+	// // true, if a deadend is reached;
+	// // false, otherwise
+	// private void CollectDeadendNodes(List<byte[,]> solutionNodes, SolvingStep currentStep)
+	// {		
+	// 	// Avoid infinite loops.
+	// 	var correspondingVisitedNode = visitedNodes.FirstOrDefault(step => AreEqual(step.Board, currentStep.Board)); 
+	// 	if (correspondingVisitedNode != null)
+	// 	{
+	// 		currentStep.NodeType = correspondingVisitedNode.NodeType;
+	// 		return;
+	// 	}
 
-		visitedNodes.Add(currentStep);
+	// 	visitedNodes.Add(currentStep);
  
- 		var nodeType = NodeType.Deadend;
-		if(solutionNodes.Contains(currentStep.Board, new BoardComparer(this.cupCount, this.cupSize)))
-		{
-			nodeType = NodeType.Solution;
-		}		
+ 	// 	var nodeType = NodeType.Deadend;
+	// 	if(solutionNodes.Contains(currentStep, new BoardComparer(this.cupCount, this.cupSize)))
+	// 	{
+	// 		nodeType = NodeType.Solution;
+	// 	}		
 		
-		for(byte from=0;from<=cupCount-1;from++)
-		{
-			var fromColor = GetUpmostColor(currentStep.Board,from);
-			if(fromColor==0)
-			{
-				continue;
-			}
+	// 	for(byte from=0;from<=cupCount-1;from++)
+	// 	{
+	// 		var fromColor = GetUpmostColor(currentStep.Board,from);
+	// 		if(fromColor==0)
+	// 		{
+	// 			continue;
+	// 		}
 			
-			for(byte to=0;to<=cupCount-1;to++)
-			{
-				var toColor = GetUpmostColor(currentStep.Board, to);
-				if (IsMovePossible(currentStep.Board, from, to, fromColor, toColor))
-				{
-					var nextStep = CreateNextStep(currentStep, from, to);
-					CollectDeadendNodes(solutionNodes, nextStep);
-					if(nodeType == NodeType.Solution)
-					{
-						continue;
-					}
+	// 		for(byte to=0;to<=cupCount-1;to++)
+	// 		{
+	// 			var toColor = GetUpmostColor(currentStep.Board, to);
+	// 			if (IsMovePossible(currentStep.Board, from, to, fromColor, toColor))
+	// 			{
+	// 				var nextStep = CreateNextStep(currentStep, from, to);
+	// 				CollectDeadendNodes(solutionNodes, nextStep);
+	// 				if(nodeType == NodeType.Solution)
+	// 				{
+	// 					continue;
+	// 				}
 
-					if(nextStep.NodeType != NodeType.Deadend)
-					{
-						nodeType = NodeType.Unknown;
-					}
-				}
-			}
-		}
+	// 				if(nextStep.NodeType != NodeType.Deadend)
+	// 				{
+	// 					nodeType = NodeType.Unknown;
+	// 				}
+	// 			}
+	// 		}
+	// 	}
 
-		currentStep.NodeType = nodeType;
-		if(nodeType == NodeType.Deadend)
-		{
-			this.deadendNodes.Add(currentStep.Board);
-		}
-	}
+	// 	currentStep.NodeType = nodeType;
+	// 	if(nodeType == NodeType.Deadend)
+	// 	{
+	// 		this.deadendNodes.Add(currentStep.Board);
+	// 	}
+	// }
 
 	private void SolveInternal(List<SolvingStep> currentSolution, SolvingStep currentStep)
 	{		
@@ -134,11 +134,10 @@ public class RiddleSolver : RiddleBase
 		}
 	}
 
-	private List<byte[,]> FlattenNodesDistinct(List<List<SolvingStep>> solutions)
+	private List<SolvingStep> FlattenNodesDistinct(List<List<SolvingStep>> solutions)
 	{
 		return solutions
 						.SelectMany(sol => sol)
-						.Select(s => s.Board)
 						.Distinct(new BoardComparer(this.cupCount, this.cupSize))
 						.ToList();
 	}
