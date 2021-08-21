@@ -5,14 +5,14 @@ using System.Linq;
 public class RiddleSolver : RiddleBase
 {
 	List<List<SolvingStep>> allSolutions;
-	List<SolvingStep> visitedNodes;
-	List<byte[,]> deadendNodes;
+	HashSet<SolvingStep> visitedNodes;
+	HashSet<byte[,]> deadendNodes;
 
 	public RiddleSolver(byte cupSize, byte cupCount, byte colorCount) : base(cupSize,cupCount,colorCount)
 	{
-		this.visitedNodes = new List<SolvingStep>();
+		this.visitedNodes = new HashSet<SolvingStep>();
 		this.allSolutions = new List<List<SolvingStep>>();
-		this.deadendNodes = new List<byte[,]>();
+		this.deadendNodes = new HashSet<byte[,]>();
 	}
 
 	public GameTreeInfo Solve(byte[,] cups)

@@ -47,7 +47,7 @@ public static class ConsolePrinter
     WriteLine($"Dead end node count: {gameTreeInfo.DeadendNodeCount}");
     if(gameTreeInfo.DeadendNodeCount>0)
     {
-      Print(gameTreeInfo.DeadendNodes);
+      Print(gameTreeInfo.DeadendNodes.ToList());
     }
   }
   
@@ -68,7 +68,7 @@ public static class ConsolePrinter
     }
   }
   
-  public static void Print(List<byte[,]> boards)
+  public static void Print(IList<byte[,]> boards)
   {
     for(var j=boards.First().GetLength(1)-1; j>=0; j--)
     {
