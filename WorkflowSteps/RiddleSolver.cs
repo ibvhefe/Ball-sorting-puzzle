@@ -24,7 +24,7 @@ public class RiddleSolver : RiddleBase
 		};
 		var solution = new List<SolvingStep>();
 		SolveInternal(solution, currentStep);
-		var distinctSolutionNodes = FlattenNodesDistinct(this.allSolutions);
+		var solutionNodeHash = CreateHashMap(this.allSolutions);
 		this.visitedNodes.Clear();
 		//CollectDeadendNodes(distinctSolutionNodes, Clone(currentStep));
 
@@ -32,12 +32,17 @@ public class RiddleSolver : RiddleBase
 		{
 			NodeCount=this.visitedNodes.Count, 
 			Solutions = this.allSolutions, 
-			SolutionNodeCount = distinctSolutionNodes.Count,
+			SolutionNodeCount = solutionNodeHash.Count,
 			DeadendNodes = this.deadendNodes,
 			DeadendNodeCount = this.deadendNodes.Count,
 			Riddle=cups
 		};
 	}
+	// private void GetNoSolutionNodes(List<SolvingStep> solutionNodes, SolvingStep currentStep)
+	// {
+	// 	foreach(var n in)
+	// }
+
 
 	// // true, if a deadend is reached;
 	// // false, otherwise
@@ -134,12 +139,12 @@ public class RiddleSolver : RiddleBase
 		}
 	}
 
-	private List<SolvingStep> FlattenNodesDistinct(List<List<SolvingStep>> solutions)
+	private HashSet<SolvingStep> CreateHashMap(List<List<SolvingStep>> solutions)
 	{
 		return solutions
 						.SelectMany(sol => sol)
 						.Distinct(new BoardComparer(this.cupCount, this.cupSize))
-						.ToList();
+						.ToHashSet(new BoardComparer(this.cupCount, this.cupSize));
 	}
 
 	private Boolean AreEqual(byte[,] a, byte[,] b)
