@@ -24,80 +24,108 @@ public class RiddleSolver : RiddleBase
 		};
 		var solution = new List<SolvingStep>();
 		SolveInternal(solution, currentStep);
-		var solutionNodeHash = CreateHashMap(this.allSolutions);
-		this.visitedNodes.Clear();
-		//CollectDeadendNodes(distinctSolutionNodes, Clone(currentStep));
+		var solutionNodes = CreateHashMap(this.allSolutions);
+		var deadendNodeGroups = CollectDeadendNodes(solutionNodes, this.visitedNodes);
 
 		return new GameTreeInfo()
 		{
 			NodeCount=this.visitedNodes.Count, 
 			Solutions = this.allSolutions, 
-			SolutionNodeCount = solutionNodeHash.Count,
-			DeadendNodes = this.deadendNodes,
-			DeadendNodeCount = this.deadendNodes.Count,
+			SolutionNodeCount = solutionNodes.Count,
+			DeadendNodeGroups = deadendNodeGroups,
+			DeadendNodeCount = deadendNodeGroups.Sum(g=>g.Count),
 			Riddle=cups
 		};
 	}
-	// private void GetNoSolutionNodes(List<SolvingStep> solutionNodes, SolvingStep currentStep)
-	// {
-	// 	foreach(var n in)
-	// }
 
+	private List<HashSet<SolvingStep>> CollectDeadendNodes(HashSet<SolvingStep> solutionNodes, HashSet<SolvingStep> allNodes)
+	{
+		var noSolutionNodes = GetNoSolutionNodes(solutionNodes, allNodes);
+		var canReachSolutionNodes = new HashSet<SolvingStep>(new BoardComparer(this.cupCount, this.cupSize));
+		var deadendNodeGroups = new List<HashSet<SolvingStep>>();
 
-	// // true, if a deadend is reached;
-	// // false, otherwise
-	// private void CollectDeadendNodes(List<byte[,]> solutionNodes, SolvingStep currentStep)
-	// {		
-	// 	// Avoid infinite loops.
-	// 	var correspondingVisitedNode = visitedNodes.FirstOrDefault(step => AreEqual(step.Board, currentStep.Board)); 
-	// 	if (correspondingVisitedNode != null)
-	// 	{
-	// 		currentStep.NodeType = correspondingVisitedNode.NodeType;
-	// 		return;
-	// 	}
+		foreach(var n in noSolutionNodes)
+		{
+			foreach(var group in deadendNodeGroups)
+			{
+				if(IsConnected(n, group))
+				{
+					group.Add(n);
+					goto Next;
+				}
+			}
 
-	// 	visitedNodes.Add(currentStep);
- 
- 	// 	var nodeType = NodeType.Deadend;
-	// 	if(solutionNodes.Contains(currentStep, new BoardComparer(this.cupCount, this.cupSize)))
-	// 	{
-	// 		nodeType = NodeType.Solution;
-	// 	}		
-		
-	// 	for(byte from=0;from<=cupCount-1;from++)
-	// 	{
-	// 		var fromColor = GetUpmostColor(currentStep.Board,from);
-	// 		if(fromColor==0)
-	// 		{
-	// 			continue;
-	// 		}
+			if(IsConnected(n, canReachSolutionNodes))
+			{
+				canReachSolutionNodes.Add(n);
+				continue;
+			}
+
+			if(IsConnected(n, solutionNodes))
+			{
+				canReachSolutionNodes.Add(n);
+				continue;
+			}
+
+			var newDeadendGroup = new HashSet<SolvingStep>(new BoardComparer(this.cupCount, this.cupSize));
+			newDeadendGroup.Add(n);
+			deadendNodeGroups.Add(newDeadendGroup);
+
+			Next:;
+		}
+
+		return deadendNodeGroups;
+	}
+
+	private List<SolvingStep> GetNoSolutionNodes(HashSet<SolvingStep> solutionNodes, HashSet<SolvingStep> allNodes)
+	{
+		return allNodes.Except(solutionNodes, new BoardComparer(this.cupCount, this.cupSize)).ToList();
+	}
+
+	private Boolean IsConnected(SolvingStep node, HashSet<SolvingStep> set)
+	{
+		var visited = new HashSet<SolvingStep>(new BoardComparer(this.cupCount, this.cupSize));
+		return IsConnectedRecursive(node, set, visited);
+	}
+
+	private Boolean IsConnectedRecursive(SolvingStep node, HashSet<SolvingStep> set, HashSet<SolvingStep> visited)
+	{
+		if(set.Contains(node))
+		{
+			return true;
+		}
+
+		if(visited.Contains(node))
+		{
+			return false;
+		}
+
+		visited.Add(node);
+
+		for(byte from=0;from<=cupCount-1;from++)
+		{
+			var fromColor = GetUpmostColor(node.Board,from);
+			if(fromColor==0)
+			{
+				continue;
+			}
 			
-	// 		for(byte to=0;to<=cupCount-1;to++)
-	// 		{
-	// 			var toColor = GetUpmostColor(currentStep.Board, to);
-	// 			if (IsMovePossible(currentStep.Board, from, to, fromColor, toColor))
-	// 			{
-	// 				var nextStep = CreateNextStep(currentStep, from, to);
-	// 				CollectDeadendNodes(solutionNodes, nextStep);
-	// 				if(nodeType == NodeType.Solution)
-	// 				{
-	// 					continue;
-	// 				}
+			for(byte to=0;to<=cupCount-1;to++)
+			{
+				var toColor = GetUpmostColor(node.Board, to);
+				if (IsMovePossible(node.Board, from, to, fromColor, toColor))
+				{
+					var nextStep = CreateNextStep(node, from, to);
+					if(IsConnectedRecursive(nextStep, set, visited))
+					{
+						return true;
+					}
+				}
+			}
+		}
 
-	// 				if(nextStep.NodeType != NodeType.Deadend)
-	// 				{
-	// 					nodeType = NodeType.Unknown;
-	// 				}
-	// 			}
-	// 		}
-	// 	}
-
-	// 	currentStep.NodeType = nodeType;
-	// 	if(nodeType == NodeType.Deadend)
-	// 	{
-	// 		this.deadendNodes.Add(currentStep.Board);
-	// 	}
-	// }
+		return false;
+	}
 
 	private void SolveInternal(List<SolvingStep> currentSolution, SolvingStep currentStep)
 	{		

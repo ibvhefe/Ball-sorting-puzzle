@@ -44,10 +44,13 @@ public static class ConsolePrinter
     {
       Print(solution.Select(s => s.Board).ToList());
     }
-    WriteLine($"Dead end node count: {gameTreeInfo.DeadendNodeCount}");
+    WriteLine($"Dead end node total count: {gameTreeInfo.DeadendNodeCount}");
     if(gameTreeInfo.DeadendNodeCount>0)
     {
-      Print(gameTreeInfo.DeadendNodes.Select(d=>d.Board).ToList());
+      foreach(var group in gameTreeInfo.DeadendNodeGroups)
+      {
+        Print(group.Select(d=>d.Board).ToList());
+      }
     }
   }
   

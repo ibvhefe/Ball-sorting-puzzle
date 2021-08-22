@@ -60,7 +60,8 @@ namespace UnitTests
             ConsolePrinter.Print(gameTree);
 
             Assert.AreEqual(4, gameTree.Solutions.Count);
-            Assert.AreEqual(1, gameTree.DeadendNodeCount);
+            Assert.AreEqual(3, gameTree.DeadendNodeCount);
+            Assert.AreEqual(2, gameTree.DeadendNodeGroups.Count);
         }
 
         [TestMethod]
@@ -90,7 +91,7 @@ namespace UnitTests
             ConsolePrinter.Print(gameTree);
 
             Assert.AreEqual(8, gameTree.Solutions.Count);
-            Assert.AreEqual(4, gameTree.DeadendNodeCount);
+            Assert.AreEqual(8, gameTree.DeadendNodeCount);
         }
 
         [TestMethod]
@@ -115,7 +116,9 @@ namespace UnitTests
 
             ConsolePrinter.SetDebugMode();
             ConsolePrinter.Print(gameTree);
-            //Assert.AreEqual(0, gameTree.Solutions.Count);
+            Assert.AreEqual(2, gameTree.Solutions.Count);
+            Assert.AreEqual(2, gameTree.DeadendNodeCount);
+            Assert.AreEqual(1, gameTree.DeadendNodeGroups.Count);
         }
     }
 }
