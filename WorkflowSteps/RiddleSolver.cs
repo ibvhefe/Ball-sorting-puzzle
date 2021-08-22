@@ -46,15 +46,6 @@ public class RiddleSolver : RiddleBase
 
 		foreach(var n in noSolutionNodes)
 		{
-			foreach(var group in deadendNodeGroups)
-			{
-				if(IsConnected(n, group))
-				{
-					group.Add(n);
-					goto Next;
-				}
-			}
-
 			if(IsConnected(n, canReachSolutionNodes))
 			{
 				canReachSolutionNodes.Add(n);
@@ -65,6 +56,15 @@ public class RiddleSolver : RiddleBase
 			{
 				canReachSolutionNodes.Add(n);
 				continue;
+			}
+
+			foreach(var group in deadendNodeGroups)
+			{
+				if(IsConnected(n, group))
+				{
+					group.Add(n);
+					goto Next;
+				}
 			}
 
 			var newDeadendGroup = new HashSet<SolvingStep>(new BoardComparer(this.cupCount, this.cupSize));
@@ -82,7 +82,7 @@ public class RiddleSolver : RiddleBase
 		return allNodes.Except(solutionNodes, new BoardComparer(this.cupCount, this.cupSize)).ToList();
 	}
 
-	private Boolean IsConnected(SolvingStep node, HashSet<SolvingStep> set)
+	public Boolean IsConnected(SolvingStep node, HashSet<SolvingStep> set)
 	{
 		var visited = new HashSet<SolvingStep>(new BoardComparer(this.cupCount, this.cupSize));
 		return IsConnectedRecursive(node, set, visited);
@@ -167,7 +167,7 @@ public class RiddleSolver : RiddleBase
 		}
 	}
 
-	private HashSet<SolvingStep> CreateHashMap(List<List<SolvingStep>> solutions)
+	public HashSet<SolvingStep> CreateHashMap(List<List<SolvingStep>> solutions)
 	{
 		return solutions
 						.SelectMany(sol => sol)
