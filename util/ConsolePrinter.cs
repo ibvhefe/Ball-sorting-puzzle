@@ -37,14 +37,18 @@ public static class ConsolePrinter
   public static void Print(GameTreeInfo gameTreeInfo)
   {
     Print(gameTreeInfo.Riddle);
-    WriteLine($"Node count: {gameTreeInfo.NodeCount}");
+    WriteLine("");
     WriteLine($"Solution node count: {gameTreeInfo.SolutionNodeCount}");
+    WriteLine($"Dead end node count: {gameTreeInfo.DeadendNodeCount}");
+    WriteLine($"Can reach solution node count: {gameTreeInfo.CanReachSolutionCount}");
+    WriteLine($"Total node count: {gameTreeInfo.NodeCount}");
+    WriteLine("");
     WriteLine($"Different solutions: {gameTreeInfo.Solutions.Count}");
     foreach(var solution in gameTreeInfo.Solutions)
     {
       Print(solution.Select(s => s.Board).ToList());
     }
-    WriteLine($"Dead end node total count: {gameTreeInfo.DeadendNodeCount}");
+    WriteLine($"Deadends: {gameTreeInfo.DeadendNodeCount}");
     if(gameTreeInfo.DeadendNodeCount>0)
     {
       foreach(var group in gameTreeInfo.DeadendNodeGroups)

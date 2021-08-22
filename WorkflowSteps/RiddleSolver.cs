@@ -32,13 +32,14 @@ public class RiddleSolver : RiddleBase
 			NodeCount=this.visitedNodes.Count, 
 			Solutions = this.allSolutions, 
 			SolutionNodeCount = solutionNodes.Count,
-			DeadendNodeGroups = deadendNodeGroups,
-			DeadendNodeCount = deadendNodeGroups.Sum(g=>g.Count),
+			DeadendNodeGroups = deadendNodeGroups.Item1,
+			DeadendNodeCount = deadendNodeGroups.Item1.Sum(g=>g.Count),
+			CanReachSolutionCount = deadendNodeGroups.Item2.Count,
 			Riddle=cups
 		};
 	}
 
-	private List<HashSet<SolvingStep>> CollectDeadendNodes(HashSet<SolvingStep> solutionNodes, HashSet<SolvingStep> allNodes)
+	private (List<HashSet<SolvingStep>>, HashSet<SolvingStep>) CollectDeadendNodes(HashSet<SolvingStep> solutionNodes, HashSet<SolvingStep> allNodes)
 	{
 		var noSolutionNodes = GetNoSolutionNodes(solutionNodes, allNodes);
 		var canReachSolutionNodes = new HashSet<SolvingStep>(new BoardComparer(this.cupCount, this.cupSize));
@@ -74,7 +75,7 @@ public class RiddleSolver : RiddleBase
 			Next:;
 		}
 
-		return deadendNodeGroups;
+		return (deadendNodeGroups,canReachSolutionNodes);
 	}
 
 	private List<SolvingStep> GetNoSolutionNodes(HashSet<SolvingStep> solutionNodes, HashSet<SolvingStep> allNodes)
