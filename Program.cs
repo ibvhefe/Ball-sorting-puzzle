@@ -17,6 +17,7 @@ namespace Ball_sorting_puzzle
             var randomRiddle = riddleCreator.Create();
             var gameTree = riddleSolver.Solve(randomRiddle);  
             ConsolePrinter.Print(gameTree);
+            
         }
     }
 }
