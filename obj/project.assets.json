@@ -3083,27 +3083,23 @@
       "MSTest.TestFramework >= 2.2.5",
       "Microsoft.NET.Test.Sdk >= 16.10.0",
       "Microsoft.NETCore.App >= 2.1.0",
-      "Newtonsoft.Json"
+      "Newtonsoft.Json >= 13.0.1"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\sebi\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\Sebastian\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\sebi\\Desktop\\ball_puzzle\\Ball-sorting-puzzle\\Ball-sorting-puzzle.csproj",
+      "projectUniqueName": "C:\\Ball_sorting_puzzle_creator\\Ball-sorting-puzzle\\Ball-sorting-puzzle.csproj",
       "projectName": "Ball-sorting-puzzle",
-      "projectPath": "C:\\Users\\sebi\\Desktop\\ball_puzzle\\Ball-sorting-puzzle\\Ball-sorting-puzzle.csproj",
-      "packagesPath": "C:\\Users\\sebi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\sebi\\Desktop\\ball_puzzle\\Ball-sorting-puzzle\\obj\\",
+      "projectPath": "C:\\Ball_sorting_puzzle_creator\\Ball-sorting-puzzle\\Ball-sorting-puzzle.csproj",
+      "packagesPath": "C:\\Users\\Sebastian\\.nuget\\packages\\",
+      "outputPath": "C:\\Ball_sorting_puzzle_creator\\Ball-sorting-puzzle\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\sebi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Sebastian\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -3115,6 +3111,7 @@
       },
       "frameworks": {
         "netcoreapp2.1": {
+          "targetAlias": "netcoreapp2.1",
           "projectReferences": {}
         }
       },
@@ -3126,6 +3123,7 @@
     },
     "frameworks": {
       "netcoreapp2.1": {
+        "targetAlias": "netcoreapp2.1",
         "dependencies": {
           "MSTest.TestAdapter": {
             "target": "Package",
@@ -3140,20 +3138,27 @@
             "version": "[16.10.0, )"
           },
           "Microsoft.NETCore.App": {
+            "suppressParent": "All",
             "target": "Package",
             "version": "[2.1.0, )",
             "autoReferenced": true
           },
           "Newtonsoft.Json": {
             "target": "Package",
-            "version": "(, )"
+            "version": "[13.0.1, )"
           }
         },
         "imports": [
-          "net461"
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48"
         ],
         "assetTargetFallback": true,
-        "warn": true
+        "warn": true,
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
       }
     }
   }

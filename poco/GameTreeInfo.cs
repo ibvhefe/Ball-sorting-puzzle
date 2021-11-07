@@ -2,6 +2,7 @@ using System.Collections.Generic;
 
 public class GameTreeInfo
 {
+    public byte ColorCount { get; set; }
     public byte[,] Riddle { get; set; }
     public List<List<SolvingStep>> Solutions { get; set; }
     public List<HashSet<SolvingStep>> DeadendNodeGroups { get; set; }
