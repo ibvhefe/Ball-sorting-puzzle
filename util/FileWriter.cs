@@ -23,7 +23,7 @@ public class FileWriter
     private ExportGameTreeInfo Convert(GameTreeInfo gameTreeInfo, int levelNumber)
     {
         var result = new ExportGameTreeInfo();
-        result.worldType = "Forest";
+        result.worldType = getAlternatingWorldType(levelNumber);
         result.tubeCount = gameTreeInfo.Riddle.GetLength(0);
         result.tubeSize = gameTreeInfo.Riddle.GetLength(1);
         result.colorCount = gameTreeInfo.ColorCount;
