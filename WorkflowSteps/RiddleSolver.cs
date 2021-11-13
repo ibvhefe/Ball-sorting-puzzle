@@ -27,6 +27,9 @@ public class RiddleSolver : RiddleBase
 		var solutionNodes = CreateHashMap(this.allSolutions);
 		var deadendNodeGroups = CollectDeadendNodes(solutionNodes, this.visitedNodes);
 
+		var perfectMoveCount = this.allSolutions.Select(s=>s.Count).Min();
+		var badMoveCount = this.allSolutions.Select(s=>s.Count).Max();
+
 		return new GameTreeInfo()
 		{
 			ColorCount = this.colorCount,
@@ -36,6 +39,9 @@ public class RiddleSolver : RiddleBase
 			DeadendNodeGroups = deadendNodeGroups.Item1,
 			DeadendNodeCount = deadendNodeGroups.Item1.Sum(g=>g.Count),
 			CanReachSolutionCount = deadendNodeGroups.Item2.Count,
+			OneStarLimit = badMoveCount,
+			TwoStarLimit = badMoveCount+(perfectMoveCount-badMoveCount)/2,
+			ThreeStarLimit = perfectMoveCount,
 			Riddle=cups
 		};
 	}

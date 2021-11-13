@@ -22,4 +22,8 @@ public class GameTreeInfo
 
     /// Total count of all deadend nodes and leafs.
     public int DeadendNodeCount { get; set; }
+    /// the same as perfect solution.
+    public int ThreeStarLimit {get;set;}
+    public int TwoStarLimit { get; set; }
+    public int OneStarLimit { get; set; }
 }

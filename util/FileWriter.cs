@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 public static class FileWriter
 {
     public static void WriteToJson(string filePath, GameTreeInfo gameTreeInfo)
@@ -20,6 +21,9 @@ public static class FileWriter
         result.tubeSize = gameTreeInfo.Riddle.GetLength(1);
         result.colorCount = gameTreeInfo.ColorCount;
         result.board = gameTreeInfo.Riddle;
+        result.oneStarLimit = gameTreeInfo.OneStarLimit;
+        result.twoStarLimit = gameTreeInfo.TwoStarLimit;
+        result.threeStarLimit = gameTreeInfo.ThreeStarLimit;
         return result;
     }
 }
@@ -30,6 +34,9 @@ public class ExportGameTreeInfo
    public int tubeCount;
    public int tubeSize;
    public int colorCount;
-   //public List<List<int>> board;
    public byte[,] board;
+
+   public int threeStarLimit {get;set;}
+   public int twoStarLimit { get; set; }
+   public int oneStarLimit { get; set; }
 }
