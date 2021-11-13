@@ -1,1 +1,1 @@
-{"worldType":"Forest","tubeCount":3,"tubeSize":4,"colorCount":2,"board":[[2,0,0,0],[1,2,1,0],[1,2,1,2]]}
+{"worldType":"Forest","tubeCount":4,"tubeSize":4,"colorCount":3,"board":[[2,3,0,0],[1,2,3,3],[3,1,2,1],[1,2,0,0]],"threeStarLimit":14,"twoStarLimit":17,"oneStarLimit":20}

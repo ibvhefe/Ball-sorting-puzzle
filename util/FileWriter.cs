@@ -2,18 +2,25 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-public static class FileWriter
+using System;
+public class FileWriter
 {
-    public static void WriteToJson(string filePath, GameTreeInfo gameTreeInfo)
+    private readonly string baseFolder;
+
+    public FileWriter(String baseFolder)
     {
-        using (StreamWriter file = File.CreateText(filePath))
+        this.baseFolder = baseFolder;
+    }
+    public void WriteToJson(int levelNumber, GameTreeInfo gameTreeInfo)
+    {
+        using (StreamWriter file = File.CreateText($"{baseFolder}{levelNumber}.json"))
         {
             JsonSerializer serializer = new JsonSerializer();
-            serializer.Serialize(file, Convert(gameTreeInfo));
+            serializer.Serialize(file, Convert(gameTreeInfo, levelNumber));
         }
     }
 
-    private static ExportGameTreeInfo Convert(GameTreeInfo gameTreeInfo)
+    private ExportGameTreeInfo Convert(GameTreeInfo gameTreeInfo, int levelNumber)
     {
         var result = new ExportGameTreeInfo();
         result.worldType = "Forest";
@@ -25,6 +32,19 @@ public static class FileWriter
         result.twoStarLimit = gameTreeInfo.TwoStarLimit;
         result.threeStarLimit = gameTreeInfo.ThreeStarLimit;
         return result;
+    }
+
+    private String getAlternatingWorldType(int levelNumber)
+    {
+        switch(levelNumber%5)
+        {
+            case 0: return "Forest";
+            case 1: return "Candy";
+            case 2: return "Graveyard";
+            case 3: return "Ice";
+            case 4: return "Desert";
+        }
+        return "Forest";
     }
 }
 

@@ -27,9 +27,14 @@ public class RiddleSolver : RiddleBase
 		var solutionNodes = CreateHashMap(this.allSolutions);
 		var deadendNodeGroups = CollectDeadendNodes(solutionNodes, this.visitedNodes);
 
-		var perfectMoveCount = this.allSolutions.Select(s=>s.Count).Min();
-		var badMoveCount = this.allSolutions.Select(s=>s.Count).Max();
-
+		var perfectMoveCount = -1;
+		var badMoveCount = -1;
+		if(this.allSolutions.Any())
+		{
+			perfectMoveCount = this.allSolutions.Select(s=>s.Count).Min();
+			badMoveCount = this.allSolutions.Select(s=>s.Count).Max();
+		}
+		
 		return new GameTreeInfo()
 		{
 			ColorCount = this.colorCount,
