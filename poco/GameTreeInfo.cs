@@ -2,6 +2,7 @@ using System.Collections.Generic;
 
 public class GameTreeInfo
 {
+    public byte ColorCount { get; set; }
     public byte[,] Riddle { get; set; }
 
     /// All possible solutions.

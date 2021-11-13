@@ -29,6 +29,7 @@ public class RiddleSolver : RiddleBase
 
 		return new GameTreeInfo()
 		{
+			ColorCount = this.colorCount,
 			NodeCount=this.visitedNodes.Count, 
 			Solutions = this.allSolutions, 
 			SolutionNodeCount = solutionNodes.Count,

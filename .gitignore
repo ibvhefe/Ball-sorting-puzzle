@@ -281,3 +281,15 @@ obj/Debug/netcoreapp2.1/Ball-sorting-puzzle.csproj.AssemblyReference.cache
 obj/Debug/netcoreapp2.1/Ball-sorting-puzzle.dll
 obj/Debug/netcoreapp2.1/Ball-sorting-puzzle.pdb
 UnitTests/obj/Debug/netcoreapp2.1/UnitTests.csproj.AssemblyReference.cache
+Program.cs
+obj/Ball-sorting-puzzle.csproj.nuget.dgspec.json
+obj/Ball-sorting-puzzle.csproj.nuget.g.props
+obj/Ball-sorting-puzzle.csproj.nuget.g.targets
+obj/project.assets.json
+obj/Debug/netcoreapp2.1/Ball-sorting-puzzle.AssemblyInfo.cs
+obj/Debug/netcoreapp2.1/Ball-sorting-puzzle.assets.cache
+obj/Debug/netcoreapp2.1/Ball-sorting-puzzle.csproj.AssemblyReference.cache
+obj/Debug/netcoreapp2.1/Ball-sorting-puzzle.csproj.CoreCompileInputs.cache
+obj/Debug/netcoreapp2.1/Ball-sorting-puzzle.csproj.FileListAbsolute.txt
+obj/Debug/netcoreapp2.1/Ball-sorting-puzzle.dll
+obj/Debug/netcoreapp2.1/Ball-sorting-puzzle.pdb
