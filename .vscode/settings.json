@@ -1,3 +1,4 @@
 {
-    "debug.console.collapseIdenticalLines": false
+    "debug.console.collapseIdenticalLines": false,
+    "debug.console.wordWrap": false
 }

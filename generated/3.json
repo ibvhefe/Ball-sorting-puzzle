@@ -1,1 +1,1 @@
-{"worldType":"Ice","tubeCount":4,"tubeSize":4,"colorCount":3,"board":[[3,2,1,2],[3,1,2,0],[1,2,3,1],[3,0,0,0]],"threeStarLimit":20,"twoStarLimit":21,"oneStarLimit":22}
+{"worldType":"Ice","tubeCount":4,"tubeSize":4,"colorCount":3,"board":[[2,0,0,0],[3,3,1,0],[1,2,3,2],[1,1,3,2]],"threeStarLimit":8,"twoStarLimit":10,"oneStarLimit":11}

@@ -31,8 +31,8 @@ public class RiddleSolver : RiddleBase
 		var badMoveCount = -1;
 		if(this.allSolutions.Any())
 		{
-			perfectMoveCount = this.allSolutions.Select(s=>s.Count).Min();
-			badMoveCount = this.allSolutions.Select(s=>s.Count).Max();
+			perfectMoveCount = this.allSolutions.Select(s=>s.Count).Min()-1;
+			badMoveCount = this.allSolutions.Select(s=>s.Count).Max()-1;
 		}
 		
 		return new GameTreeInfo()
@@ -152,7 +152,7 @@ public class RiddleSolver : RiddleBase
 		}
 			
 		// Avoid infinite loops.
-		if (visitedNodes.Any(step => AreEqual(step.Board, currentStep.Board)))
+		if (currentSolution.Any(step => AreEqual(step.Board, currentStep.Board)))
 		{
 		  return;
 		}

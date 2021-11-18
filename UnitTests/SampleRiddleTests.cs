@@ -41,14 +41,17 @@ namespace UnitTests
             node[0,1]=3;
             node[0,2]=1;
             node[0,3]=0;
+
             node[1,0]=2;
             node[1,1]=2;
             node[1,2]=1;
             node[1,3]=0;
+
             node[2,0]=3;
             node[2,1]=3;
             node[2,2]=3;
             node[2,3]=1;
+
             node[3,0]=2;
             node[3,1]=2;
             node[3,2]=0;
@@ -59,7 +62,11 @@ namespace UnitTests
             ConsolePrinter.SetDebugMode();
             ConsolePrinter.Print(gameTree);
 
-            Assert.AreEqual(4, gameTree.Solutions.Count);
+            var count = gameTree.Solutions.Count;
+		    var distinctCount = gameTree.Solutions.Distinct(new SolutionComparer()).Count();
+            Assert.IsTrue(count == distinctCount);
+
+            Assert.AreEqual(16, gameTree.Solutions.Count);
             Assert.AreEqual(3, gameTree.DeadendNodeCount);
             Assert.AreEqual(2, gameTree.DeadendNodeGroups.Count);
         }
@@ -72,14 +79,17 @@ namespace UnitTests
             node[0,1]=3;
             node[0,2]=1;
             node[0,3]=0;
+
             node[1,0]=3;
             node[1,1]=3;
             node[1,2]=1;
             node[1,3]=0;
+            
             node[2,0]=2;
             node[2,1]=2;
             node[2,2]=1;
             node[2,3]=0;
+
             node[3,0]=2;
             node[3,1]=2;
             node[3,2]=1;
@@ -90,7 +100,13 @@ namespace UnitTests
             ConsolePrinter.SetDebugMode();
             ConsolePrinter.Print(gameTree);
 
-            Assert.AreEqual(8, gameTree.Solutions.Count);
+            var count = gameTree.Solutions.Count;
+		    var distinctCount = gameTree.Solutions.Distinct(new SolutionComparer()).Count();
+            Assert.IsTrue(count == distinctCount);
+
+            // todo what the fuck(?)
+            Assert.AreEqual(3520, gameTree.Solutions.Count);
+
             Assert.AreEqual(4, gameTree.DeadendNodeCount);
         }
 
@@ -201,7 +217,7 @@ namespace UnitTests
 
             ConsolePrinter.SetDebugMode();
             ConsolePrinter.Print(gameTree);
-            Assert.AreEqual(15, gameTree.Solutions.Select(s=>s.Count).Min());
+            Assert.AreEqual(15, gameTree.Solutions.Select(s=>s.Count).Min()-1);
         }
     }
 }
