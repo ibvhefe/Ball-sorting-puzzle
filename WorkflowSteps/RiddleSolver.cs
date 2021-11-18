@@ -44,6 +44,7 @@ public class RiddleSolver : RiddleBase
 			DeadendNodeGroups = deadendNodeGroups.Item1,
 			DeadendNodeCount = deadendNodeGroups.Item1.Sum(g=>g.Count),
 			CanReachSolutionCount = deadendNodeGroups.Item2.Count,
+			CanReachSolutions = deadendNodeGroups.Item2,
 			OneStarLimit = badMoveCount,
 			TwoStarLimit = badMoveCount+(perfectMoveCount-badMoveCount)/2,
 			ThreeStarLimit = perfectMoveCount,

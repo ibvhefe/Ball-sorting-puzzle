@@ -171,5 +171,37 @@ namespace UnitTests
 
             Assert.IsTrue(actual);
         }
+
+        [TestMethod]
+        public void BestSolutionMustBeOptimal()
+        {
+            var node = new byte[4,4];
+            node[0,0]=3;
+            node[0,1]=2;
+            node[0,2]=1;
+            node[0,3]=2;
+
+            node[1,0]=3;
+            node[1,1]=1;
+            node[1,2]=2;
+            node[1,3]=0;
+
+            node[2,0]=1;
+            node[2,1]=2;
+            node[2,2]=3;
+            node[2,3]=1;
+
+            node[3,0]=3;
+            node[3,1]=0;
+            node[3,2]=0;
+            node[3,3]=0;
+
+            var riddleSolver = new RiddleSolver(4, 4, 3);
+            var gameTree = riddleSolver.Solve(node);
+
+            ConsolePrinter.SetDebugMode();
+            ConsolePrinter.Print(gameTree);
+            Assert.AreEqual(15, gameTree.Solutions.Select(s=>s.Count).Min());
+        }
     }
 }

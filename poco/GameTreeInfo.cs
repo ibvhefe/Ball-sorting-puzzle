@@ -11,6 +11,8 @@ public class GameTreeInfo
     /// Once inside a deadend group, there is no way to win again.
     public List<HashSet<SolvingStep>> DeadendNodeGroups { get; set; }
     
+    public HashSet<SolvingStep> CanReachSolutions { get; internal set; }
+    
     /// Overall node count.
     public int NodeCount { get; set; }
 

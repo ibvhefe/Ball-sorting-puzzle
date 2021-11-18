@@ -56,6 +56,15 @@ public static class ConsolePrinter
         Print(group.Select(d=>d.Board).ToList());
       }
     }
+    WriteLine($"Can reach solution nodes: {gameTreeInfo.CanReachSolutionCount}");
+    if(gameTreeInfo.CanReachSolutionCount>0)
+    {
+      foreach(var canReachSolutionNode in gameTreeInfo.CanReachSolutions)
+      {
+        Print(canReachSolutionNode.Board);
+        WriteLine("");
+      }
+    }
   }
   
   public static void Print(byte[,] array)
