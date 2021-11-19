@@ -22,8 +22,9 @@ steps:
   inputs:
     command: 'build'
     projects: '**/Ball-sorting-puzzle.csproj'
+  displayName: 'Building'
 
 - task: DotNetCoreCLI@2
   inputs:
     command: 'test'
-    projects: '**/UnitTests.csproj'
+  displayName: 'Testing'
