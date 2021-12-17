@@ -72,6 +72,44 @@ namespace UnitTests
         }
 
         [TestMethod]
+        public void InfiniteLoops()
+        {
+            var node = new byte[4,4];
+            node[0,0]=2;
+            node[0,1]=2;
+            node[0,2]=1;
+            node[0,3]=0;
+
+            node[1,0]=1;
+            node[1,1]=2;
+            node[1,2]=0;
+            node[1,3]=0;
+
+            node[2,0]=0;
+            node[2,1]=0;
+            node[2,2]=0;
+            node[2,3]=0;
+
+            node[3,0]=1;
+            node[3,1]=2;
+            node[3,2]=1;
+            node[3,3]=0;
+
+            var riddleSolver = new RiddleSolver(4, 4, 2);
+            var gameTree = riddleSolver.Solve(node);
+            ConsolePrinter.SetDebugMode();
+            ConsolePrinter.Print(gameTree);
+
+            var count = gameTree.Solutions.Count;
+		    var distinctCount = gameTree.Solutions.Distinct(new SolutionComparer()).Count();
+            Assert.IsTrue(count == distinctCount);
+
+            Assert.AreEqual(16, gameTree.Solutions.Count);
+            Assert.AreEqual(3, gameTree.DeadendNodeCount);
+            Assert.AreEqual(2, gameTree.DeadendNodeGroups.Count);
+        }
+
+        [TestMethod]
         public void ManyDeadendNodes()
         {
             var node = new byte[4,4];

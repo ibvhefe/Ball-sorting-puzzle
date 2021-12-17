@@ -1,11 +1,11 @@
 using System;
 public abstract class RiddleBase
 {
-    protected byte cupSize;
-	protected byte cupCount;
-	protected byte colorCount;
+    protected int cupSize;
+	protected int cupCount;
+	protected int colorCount;
 
-	public RiddleBase(byte cupSize, byte cupCount, byte colorCount)
+	public RiddleBase(int cupSize, int cupCount, int colorCount)
 	{
 		this.cupSize = cupSize;
 		this.cupCount = cupCount;

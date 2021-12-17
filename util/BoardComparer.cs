@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 public class BoardComparer : IEqualityComparer<SolvingStep>
 {
-    byte cupCount;
-    byte cupSize;
+    int cupCount;
+    int cupSize;
 
-    public BoardComparer(byte cupCount, byte cupSize)
+    public BoardComparer(int cupCount, int cupSize)
     {
         this.cupCount = cupCount;
         this.cupSize = cupSize;

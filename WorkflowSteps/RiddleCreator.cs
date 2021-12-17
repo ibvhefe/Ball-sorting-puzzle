@@ -4,7 +4,7 @@ using System.Linq;
 
 public class RiddleCreator : RiddleBase
 {
-	public RiddleCreator(byte cupSize, byte cupCount, byte colorCount) : base(cupSize,cupCount,colorCount)
+	public RiddleCreator(int cupSize, int cupCount, int colorCount) : base(cupSize,cupCount,colorCount)
 	{
 	}
 
@@ -41,7 +41,7 @@ public class RiddleCreator : RiddleBase
 		rng.Shuffle(array);
 	}
 
-	private byte[] CreateBallSequence(byte cupSize, byte colorCount)
+	private byte[] CreateBallSequence(int cupSize, int colorCount)
 	{
 		var allBalls = new byte[colorCount * cupSize];
 		var i = 0;

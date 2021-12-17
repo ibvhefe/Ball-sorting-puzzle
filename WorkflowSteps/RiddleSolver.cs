@@ -8,7 +8,7 @@ public class RiddleSolver : RiddleBase
 	HashSet<SolvingStep> visitedNodes;
 	HashSet<SolvingStep> deadendNodes;
 
-	public RiddleSolver(byte cupSize, byte cupCount, byte colorCount) : base(cupSize,cupCount,colorCount)
+	public RiddleSolver(int cupSize, int cupCount, int colorCount) : base(cupSize,cupCount,colorCount)
 	{
 		this.visitedNodes = new HashSet<SolvingStep>(new BoardComparer(this.cupCount, this.cupSize));
 		this.allSolutions = new List<List<SolvingStep>>();

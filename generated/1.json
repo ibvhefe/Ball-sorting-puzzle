@@ -1,1 +1,1 @@
-{"worldType":"Candy","tubeCount":4,"tubeSize":4,"colorCount":3,"board":[[1,0,0,0],[3,2,3,2],[3,2,1,1],[1,2,3,0]],"threeStarLimit":13,"twoStarLimit":15,"oneStarLimit":17}
+{"worldType":"Candy","tubeCount":3,"tubeSize":4,"colorCount":1,"board":[[1,0,0,0],[1,1,0,0],[1,0,0,0]],"threeStarLimit":2,"twoStarLimit":7,"oneStarLimit":12}

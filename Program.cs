@@ -10,20 +10,22 @@ namespace Ball_sorting_puzzle
             for(var i=1;i<=10;i++)
             {
                 // Init.
-                byte cupSize = 4;
-                byte cupCount = 4;
-                byte colorCount = 3;
+                int cupSize = 4;
+                int cupCount = i+2;
+                int colorCount = i;
                 var riddleCreator = new RiddleCreator(cupSize, cupCount, colorCount);
                 var riddleSolver = new RiddleSolver(cupSize, cupCount, colorCount);
                 var fileWriter = new FileWriter(@"C:\Ball_sorting_puzzle_creator\Ball-sorting-puzzle\generated\");
 
                 // Workflow steps.
                 var randomRiddle = riddleCreator.Create();
-                var gameTree = riddleSolver.Solve(randomRiddle);  
+                ConsolePrinter.Print(randomRiddle);
+                var gameTree = riddleSolver.Solve(randomRiddle);
                 if(gameTree.Solutions.Any())
                 {
-                    ConsolePrinter.Print(gameTree);
+                    //ConsolePrinter.Print(gameTree);
                     fileWriter.WriteToJson(i, gameTree);
+                    Console.WriteLine(i);
                 }
                 else
                 {
