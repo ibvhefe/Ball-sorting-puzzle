@@ -170,7 +170,7 @@ namespace UnitTests
             var riddleSolver = new RiddleSolver(4, 4, 3);
             var gameTree = riddleSolver.Solve(node);
             ConsolePrinter.SetDebugMode();
-            ConsolePrinter.Print(gameTree);
+            //ConsolePrinter.Print(gameTree);
 
             var count = gameTree.Solutions.Count;
 		    var distinctCount = gameTree.Solutions.Distinct(new SolutionComparer()).Count();

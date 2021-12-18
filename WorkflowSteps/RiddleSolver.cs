@@ -181,6 +181,48 @@ public class RiddleSolver : RiddleBase
 		}
 	}
 
+	private Boolean DoesMoveMakeSense(byte[,] cups, byte from, byte to, byte fromColor, byte toColor)
+	{
+		// Get collector tube.
+		
+
+        return true;
+	}
+
+	internal int GetCollectorTubePosition(byte[,] cups, byte fromColor)
+	{
+		var globalMax=0;
+		var collectorTubePosition=-1;
+		for(var column=0; column < cupCount; column++)
+		{
+			var currentMax=0;
+			for(var row=0;row<cupSize; row++)
+			{
+				var currentColor = cups[column,row];
+				if(currentColor==fromColor)
+				{
+					currentMax++;
+				}
+				else if (currentColor==0)
+				{
+					// Do nothing.
+				}
+				else
+				{
+					currentMax=0;
+					break;
+				}
+			}
+			if(currentMax>globalMax)
+			{
+				globalMax = currentMax;
+				collectorTubePosition = column;
+			}
+		}
+
+		return collectorTubePosition;
+	}
+
 	public HashSet<SolvingStep> CreateHashMap(List<List<SolvingStep>> solutions)
 	{
 		return solutions
