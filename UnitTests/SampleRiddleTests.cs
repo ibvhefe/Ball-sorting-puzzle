@@ -95,9 +95,9 @@ namespace UnitTests
             node[3,2]=1;
             node[3,3]=0;
 
+            ConsolePrinter.SetDebugMode();
             var riddleSolver = new RiddleSolver(4, 4, 2);
             var gameTree = riddleSolver.Solve(node);
-            ConsolePrinter.SetDebugMode();
             ConsolePrinter.Print(gameTree);
 
             var count = gameTree.Solutions.Count;
@@ -107,6 +107,40 @@ namespace UnitTests
             Assert.AreEqual(16, gameTree.Solutions.Count);
             Assert.AreEqual(3, gameTree.DeadendNodeCount);
             Assert.AreEqual(2, gameTree.DeadendNodeGroups.Count);
+        }
+
+        [TestMethod]
+        public void DifficulteLevelRemainsSolvable()
+        {
+            var node = new byte[4,4];
+            node[0,0]=2;
+            node[0,1]=0;
+            node[0,2]=0;
+            node[0,3]=0;
+
+            node[1,0]=3;
+            node[1,1]=2;
+            node[1,2]=1;
+            node[1,3]=0;
+
+            node[2,0]=3;
+            node[2,1]=1;
+            node[2,2]=1;
+            node[2,3]=2;
+
+            node[3,0]=3;
+            node[3,1]=2;
+            node[3,2]=3;
+            node[3,3]=1;
+
+            ConsolePrinter.SetDebugMode();
+            var riddleSolver = new RiddleSolver(4, 4, 3);
+            var gameTree = riddleSolver.Solve(node);
+            ConsolePrinter.Print(gameTree);
+
+            Assert.AreEqual(16, gameTree.ThreeStarLimit);
+            Assert.AreEqual(18, gameTree.TwoStarLimit);
+            Assert.AreEqual(19, gameTree.OneStarLimit);
         }
 
         [TestMethod]
