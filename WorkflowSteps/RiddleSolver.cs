@@ -171,7 +171,9 @@ public class RiddleSolver : RiddleBase
 			for(byte to=0;to<=cupCount-1;to++)
 			{
 				var toColor = GetUpmostColor(currentStep.Board, to);
-				if (IsMovePossible(currentStep.Board, from, to, fromColor, toColor))
+				var collectorTubePosition = GetBestCollectorTubePosition(currentStep.Board, fromColor);
+				if (IsMovePossible(currentStep.Board, from, to, fromColor, toColor) && 
+				    DoesMoveMakeSense(currentStep.Board, from, to, fromColor, toColor,collectorTubePosition))
 				{
 					var nextStep = CreateNextStep(currentStep, from, to);
 					SolveInternal(currentSolution, nextStep);
@@ -181,15 +183,47 @@ public class RiddleSolver : RiddleBase
 		}
 	}
 
-	private Boolean DoesMoveMakeSense(byte[,] cups, byte from, byte to, byte fromColor, byte toColor)
+	private Boolean DoesMoveMakeSense(byte[,] cups, byte from, byte to, byte fromColor, byte toColor, int collectorTubePosition)
 	{
-		// Get collector tube.
+		// For now all nonsense-move-evaluations need a collectorTubePosition
+		if(collectorTubePosition==-1)
+		{
+			return true;
+		}
 		
+		// Do not create a new collector tube, if you already have one.
+		if(collectorTubePosition==from && toColor==0)
+		{
+			return false;
+		}
+
+		// Do not feed other collector tubes.
+		var targetIsCollectorTube = IsCollectorTubeOfColor(cups,to,toColor);
+		if(targetIsCollectorTube && to!=collectorTubePosition)
+		{
+			return false;
+		}
 
         return true;
 	}
 
-	internal int GetCollectorTubePosition(byte[,] cups, byte fromColor)
+    private bool IsCollectorTubeOfColor(byte[,] cups, byte column, byte color)
+	{
+        for(var c=0; c < cupCount; c++)
+		{
+			for(var row=0;row<cupSize; row++)
+			{
+				var currentColor = cups[column,row];
+				if(currentColor!=color || currentColor!=0)
+				{
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	internal int GetBestCollectorTubePosition(byte[,] cups, byte fromColor)
 	{
 		var globalMax=0;
 		var collectorTubePosition=-1;

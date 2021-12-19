@@ -32,8 +32,8 @@ namespace UnitTests
             node[3,3]=0;
 
             var solver = new RiddleSolver(4,4,3);
-            Assert.AreEqual(0, solver.GetCollectorTubePosition(node,1));
-            Assert.AreEqual(1, solver.GetCollectorTubePosition(node,2));
+            Assert.AreEqual(0, solver.GetBestCollectorTubePosition(node,1));
+            Assert.AreEqual(1, solver.GetBestCollectorTubePosition(node,2));
         }
 
         [TestMethod]
@@ -61,7 +61,7 @@ namespace UnitTests
             node[3,3]=3;
 
             var solver = new RiddleSolver(4,4,3);
-            Assert.AreEqual(1, solver.GetCollectorTubePosition(node,1));
+            Assert.AreEqual(1, solver.GetBestCollectorTubePosition(node,1));
         }
 
         [TestMethod]
@@ -89,7 +89,7 @@ namespace UnitTests
             node[3,3]=0;
 
             var solver = new RiddleSolver(4,4,3);
-            Assert.AreEqual(1, solver.GetCollectorTubePosition(node,1));
+            Assert.AreEqual(1, solver.GetBestCollectorTubePosition(node,1));
         }
     }
 }
