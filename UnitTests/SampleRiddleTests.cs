@@ -1,6 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Ball_sorting_puzzle;
 using System.Linq;
+using System.Diagnostics;
 
 namespace UnitTests
 {
@@ -96,8 +96,13 @@ namespace UnitTests
             node[3,3]=0;
 
             var riddleSolver = new RiddleSolver(4, 4, 2);
+            var sw = new Stopwatch();
+            sw.Start();
             var gameTree = riddleSolver.Solve(node);
+            sw.Stop();
+            var actual = sw.Elapsed;
             Assert.AreEqual(1992252, gameTree.Solutions.Count);
+            Assert.AreEqual(1000, actual);
         }
 
         [TestMethod]

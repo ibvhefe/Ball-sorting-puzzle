@@ -398,13 +398,7 @@ public class RiddleSolver : RiddleBase
 	private byte[,] Clone(byte[,] array)
 	{
 		var clone = new byte[cupCount,cupSize];
-		for(var i = 0; i<=cupCount-1; i++)
-		{
-			for(var j=0; j<=cupSize-1; j++)
-			{
-				clone[i,j] = array[i,j];
-			}
-		}
+		Buffer.BlockCopy(array, 0, clone, 0, arraySize);
 		return clone;
 	}
 }
