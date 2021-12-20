@@ -388,13 +388,14 @@ public class RiddleSolver : RiddleBase
 
 	public List<SolvingStep> Clone(List<SolvingStep> steps)
 		{	
-			var clonedList = new List<SolvingStep>(steps.Count);
+			/*var clonedList = new List<SolvingStep>(steps.Count);
 			foreach(var step in steps)
 			{
 				clonedList.Add(Clone(step));
 			}
 			
-			return clonedList;
+			return clonedList;*/
+			return steps.ToList();
 		}
 
 	private byte[,] Clone(byte[,] array)

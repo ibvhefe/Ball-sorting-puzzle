@@ -102,7 +102,6 @@ namespace UnitTests
             sw.Stop();
             var actual = sw.Elapsed;
             Assert.AreEqual(1992252, gameTree.Solutions.Count);
-            Assert.AreEqual(1000, actual);
         }
 
         [TestMethod]
