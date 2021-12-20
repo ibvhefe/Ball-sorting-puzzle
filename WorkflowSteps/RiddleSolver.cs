@@ -20,7 +20,8 @@ public class RiddleSolver : RiddleBase
 		var currentStep = new SolvingStep()
 		{
 			Board = cups,
-			LastMove = new Move(){From=0,To=0}
+			From = 0,
+			To = 0
 		};
 		var solution = new List<SolvingStep>();
 		SolveInternal(solution, currentStep);
@@ -284,7 +285,8 @@ public class RiddleSolver : RiddleBase
 	private SolvingStep CreateNextStep(SolvingStep currentStep, byte from, byte to)
 	{
 		var clone = Clone(currentStep);
-		clone.LastMove = new Move() { From = from, To = to };
+		clone.From = from;
+		clone.To = to;
 		var pulledColor = Pull(clone.Board, from);
 		Push(clone.Board, pulledColor, to);
 		return clone;
@@ -379,14 +381,14 @@ public class RiddleSolver : RiddleBase
 		return new SolvingStep
 		{
 			Board = Clone(step.Board),
-			LastMove = step.LastMove,
-			NodeType = step.NodeType
+			From = step.From,
+			To = step.To,
 		};
 	}
 
 	public List<SolvingStep> Clone(List<SolvingStep> steps)
-		{
-			var clonedList = new List<SolvingStep>();
+		{	
+			var clonedList = new List<SolvingStep>(steps.Count);
 			foreach(var step in steps)
 			{
 				clonedList.Add(Clone(step));

@@ -1,6 +1,6 @@
-public class SolvingStep
+public record struct SolvingStep
 {
 	public byte[,] Board { get; set; }
-	public Move LastMove { get; set; }
-	public NodeType NodeType { get; set; }
+	public byte From { get; set; }
+	public byte To { get; set; }
 }

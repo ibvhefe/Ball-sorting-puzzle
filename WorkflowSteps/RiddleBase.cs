@@ -6,13 +6,15 @@ public abstract class RiddleBase
 	protected int colorCount;
 
 	protected static int arraySize;
+	protected static int solvingStepSize;
 
 	public RiddleBase(int cupSize, int cupCount, int colorCount)
 	{
 		this.cupSize = cupSize;
 		this.cupCount = cupCount;
 		this.colorCount = colorCount;
-		arraySize = cupSize*cupCount;
+		arraySize = cupSize*cupCount; 
+		solvingStepSize = arraySize + 2;
 	}
 
 	protected Boolean Push(byte[,] cups, byte cupColor, int column)

@@ -10,12 +10,12 @@ public class SolutionComparer : IEqualityComparer<List<SolvingStep>>
 
 		for (var i = 0; i <= a.Count - 1; i++)
 		{
-			if (a[i].LastMove.From != b[i].LastMove.From)
+			if (a[i].From != b[i].From)
 			{
 				return false;
 			}
 
-			if (a[i].LastMove.To != b[i].LastMove.To)
+			if (a[i].To != b[i].To)
 			{
 				return false;
 			}
