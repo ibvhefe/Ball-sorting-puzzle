@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Ball_sorting_puzzle_creator\\Ball-sorting-puzzle\\Ball-sorting-puzzle.csproj": {}
+    "C:\\Ball_sorting_puzzle_creator\\Ball-sorting-puzzle\\Ball-sorting-puzzle.csproj": {}
   },
   "projects": {
-    "c:\\Ball_sorting_puzzle_creator\\Ball-sorting-puzzle\\Ball-sorting-puzzle.csproj": {
+    "C:\\Ball_sorting_puzzle_creator\\Ball-sorting-puzzle\\Ball-sorting-puzzle.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Ball_sorting_puzzle_creator\\Ball-sorting-puzzle\\Ball-sorting-puzzle.csproj",
+        "projectUniqueName": "C:\\Ball_sorting_puzzle_creator\\Ball-sorting-puzzle\\Ball-sorting-puzzle.csproj",
         "projectName": "Ball-sorting-puzzle",
-        "projectPath": "c:\\Ball_sorting_puzzle_creator\\Ball-sorting-puzzle\\Ball-sorting-puzzle.csproj",
+        "projectPath": "C:\\Ball_sorting_puzzle_creator\\Ball-sorting-puzzle\\Ball-sorting-puzzle.csproj",
         "packagesPath": "C:\\Users\\Sebastian\\.nuget\\packages\\",
-        "outputPath": "c:\\Ball_sorting_puzzle_creator\\Ball-sorting-puzzle\\obj\\",
+        "outputPath": "C:\\Ball_sorting_puzzle_creator\\Ball-sorting-puzzle\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Sebastian\\AppData\\Roaming\\NuGet\\NuGet.Config",

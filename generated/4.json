@@ -1,1 +1,1 @@
-{"worldType":"Desert","tubeCount":5,"tubeSize":4,"colorCount":4,"board":[[4,1,0,0],[2,3,2,0],[1,2,4,0],[4,3,3,1],[1,2,3,4]],"threeStarLimit":20,"twoStarLimit":21,"oneStarLimit":22}
+{"worldType":"Desert","tubeCount":5,"tubeSize":4,"colorCount":4,"board":[[3,4,1,0],[4,1,0,0],[1,2,3,0],[2,2,4,1],[2,3,3,4]],"threeStarLimit":16,"twoStarLimit":23,"oneStarLimit":30}

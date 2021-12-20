@@ -7,11 +7,13 @@ namespace Ball_sorting_puzzle
     {
         static void Main(string[] args)
         {
+            var repeatNeeded=0;
+            var additionalEmptyTube=0;
             for(var i=1;i<=10;i++)
             {
                 // Init.
                 int cupSize = 4;
-                int cupCount = i+2;
+                int cupCount = i+1+additionalEmptyTube;
                 int colorCount = i;
                 var riddleCreator = new RiddleCreator(cupSize, cupCount, colorCount);
                 var riddleSolver = new RiddleSolver(cupSize, cupCount, colorCount);
@@ -25,12 +27,19 @@ namespace Ball_sorting_puzzle
                 {
                     //ConsolePrinter.Print(gameTree);
                     fileWriter.WriteToJson(i, gameTree);
-                    Console.WriteLine(i);
+                    repeatNeeded=0;
                 }
                 else
                 {
                     i--;
+                    repeatNeeded++;
+                    if(repeatNeeded>10)
+                    {
+                        repeatNeeded = 0;
+                        additionalEmptyTube++;
+                    }
                 }
+                Console.WriteLine(i);
             }
         }
     }
