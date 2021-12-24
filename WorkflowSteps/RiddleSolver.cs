@@ -34,6 +34,10 @@ public class RiddleSolver : RiddleBase
 		{
 			perfectMoveCount = this.allSolutions.Select(s=>s.Count).Min()-1;
 			badMoveCount = this.allSolutions.Select(s=>s.Count).Max()-1;
+			if(badMoveCount<perfectMoveCount+2)
+			{
+				badMoveCount = perfectMoveCount+2;
+			}
 		}
 		
 		return new GameTreeInfo()
@@ -174,7 +178,7 @@ public class RiddleSolver : RiddleBase
 				var toColor = GetUpmostColor(currentStep.Board, to);
 				var collectorTubePosition = GetBestCollectorTubePosition(currentStep.Board, fromColor);
 				if (IsMovePossible(currentStep.Board, from, to, fromColor, toColor) && 
-				    DoesMoveMakeSense(currentStep.Board, from, to, fromColor, toColor,collectorTubePosition))
+				    DoesMoveMakeSense(currentStep.Board, from, to, fromColor, toColor, collectorTubePosition))
 				{
 					var nextStep = CreateNextStep(currentStep, from, to);
 					SolveInternal(currentSolution, nextStep);
@@ -184,23 +188,34 @@ public class RiddleSolver : RiddleBase
 		}
 	}
 
-	private Boolean DoesMoveMakeSense(byte[,] cups, byte from, byte to, byte fromColor, byte toColor, int collectorTubePosition)
-	{
-		// For now all nonsense-move-evaluations need a collectorTubePosition
-		if(collectorTubePosition==-1)
-		{
-			return true;
-		}
-		
+	private Boolean DoesMoveMakeSense(byte[,] cups, byte from, byte to, byte fromColor, byte toColor, int mainCollectorTubePosition)
+	{		
 		// Do not create a new collector tube, if you already have one.
-		if(collectorTubePosition==from && toColor==0)
+		if(mainCollectorTubePosition==from && toColor==0)
+		{
+			return false;
+		}
+		var sourceIsCollectorTube = IsCollectorTubeOfColor(cups,from,fromColor);
+		if(sourceIsCollectorTube && toColor==0)
 		{
 			return false;
 		}
 
-		// Do not feed other collector tubes.
-		var targetIsCollectorTube = IsCollectorTubeOfColor(cups,to,toColor);
-		if(targetIsCollectorTube && to!=collectorTubePosition)
+		// Do not feed lesser collector tubes.
+		var targetIsCollectorTube = IsCollectorTubeOfColor(cups,to,fromColor);
+		if(targetIsCollectorTube && from==mainCollectorTubePosition)
+		{
+			return false;
+		}
+
+		// Do not feed collector tubes, that are not main collectors.
+		if(targetIsCollectorTube && to!=mainCollectorTubePosition)
+		{
+			return false;
+		}
+
+		// Do not start a move, if the same move has been done by a left neighbour before.
+		if(HasCopyToTheRight(cups, from))
 		{
 			return false;
 		}
@@ -208,19 +223,48 @@ public class RiddleSolver : RiddleBase
         return true;
 	}
 
-    private bool IsCollectorTubeOfColor(byte[,] cups, byte column, byte color)
+	internal bool HasCopyToTheRight(byte[,] cups, byte column)
 	{
-        for(var c=0; c < cupCount; c++)
+		for(var i=column+1;i<cupCount;i++)
 		{
-			for(var row=0;row<cupSize; row++)
+			if(AreEqual(cups,i,column))
 			{
-				var currentColor = cups[column,row];
-				if(currentColor!=color || currentColor!=0)
-				{
-					return false;
-				}
+				return true;
 			}
 		}
+
+		return false;
+	}
+
+	private bool AreEqual(byte[,] cups, int a, byte b)
+	{
+		for(var i=0;i<cupSize;i++)
+		{
+			if(cups[a,i]!=cups[b,i])
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+    private bool IsCollectorTubeOfColor(byte[,] cups, byte column, byte color)
+	{
+		if(cups[column,0]!=color)
+		{
+			return false;
+		}
+
+        for(var row=1;row<cupSize; row++)
+		{
+			var currentColor = cups[column,row];
+			if(currentColor!=color && currentColor!=0)
+			{
+				return false;
+			}
+		}
+		
 		return true;
 	}
 

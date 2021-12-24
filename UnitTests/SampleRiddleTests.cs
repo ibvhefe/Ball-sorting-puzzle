@@ -8,6 +8,62 @@ namespace UnitTests
     public class SampleRiddleTests
     {
         [TestMethod]
+        public void OnlyOneStepAllowed()
+        {
+            var node = new byte[4,4];
+            node[0,0]=0;
+            node[0,1]=0;
+            node[0,2]=0;
+            node[0,3]=0;
+            node[1,0]=1;
+            node[1,1]=0;
+            node[1,2]=0;
+            node[1,3]=0;
+            node[2,0]=0;
+            node[2,1]=0;
+            node[2,2]=0;
+            node[2,3]=0;
+            node[3,0]=1;
+            node[3,1]=1;
+            node[3,2]=1;
+            node[3,3]=0;
+
+            var riddleSolver = new RiddleSolver(4, 4, 1);
+            var gameTree = riddleSolver.Solve(node);
+            ConsolePrinter.SetDebugMode();
+            ConsolePrinter.Print(gameTree);
+            Assert.AreEqual(1, gameTree.Solutions.Count);
+        }
+
+        [TestMethod]
+        public void OnlyOneSolutionAllowed()
+        {
+            var node = new byte[4,4];
+            node[0,0]=1;
+            node[0,1]=0;
+            node[0,2]=0;
+            node[0,3]=0;
+            node[1,0]=1;
+            node[1,1]=0;
+            node[1,2]=0;
+            node[1,3]=0;
+            node[2,0]=1;
+            node[2,1]=0;
+            node[2,2]=0;
+            node[2,3]=0;
+            node[3,0]=1;
+            node[3,1]=0;
+            node[3,2]=0;
+            node[3,3]=0;
+
+            var riddleSolver = new RiddleSolver(4, 4, 1);
+            var gameTree = riddleSolver.Solve(node);
+            ConsolePrinter.SetDebugMode();
+            ConsolePrinter.Print(gameTree);
+            Assert.AreEqual(1, gameTree.Solutions.Count);
+        }
+
+        [TestMethod]
         public void NoSolutions()
         {
             var node = new byte[4,4];
@@ -66,7 +122,7 @@ namespace UnitTests
 		    var distinctCount = gameTree.Solutions.Distinct(new SolutionComparer()).Count();
             Assert.IsTrue(count == distinctCount);
 
-            Assert.AreEqual(16, gameTree.Solutions.Count);
+            Assert.AreEqual(4, gameTree.Solutions.Count);
             Assert.AreEqual(3, gameTree.DeadendNodeCount);
             Assert.AreEqual(2, gameTree.DeadendNodeGroups.Count);
         }
@@ -101,7 +157,9 @@ namespace UnitTests
             var gameTree = riddleSolver.Solve(node);
             sw.Stop();
             var actual = sw.Elapsed;
-            Assert.AreEqual(1992252, gameTree.Solutions.Count);
+            //ConsolePrinter.SetDebugMode();
+            //ConsolePrinter.Print(gameTree);
+            Assert.AreEqual(476327, gameTree.Solutions.Count);
         }
 
         [TestMethod]
@@ -134,8 +192,8 @@ namespace UnitTests
             ConsolePrinter.Print(gameTree);
 
             Assert.AreEqual(16, gameTree.ThreeStarLimit);
-            Assert.AreEqual(18, gameTree.TwoStarLimit);
-            Assert.AreEqual(19, gameTree.OneStarLimit);
+            Assert.AreEqual(17, gameTree.TwoStarLimit);
+            Assert.AreEqual(18, gameTree.OneStarLimit);
         }
 
         [TestMethod]
@@ -164,17 +222,17 @@ namespace UnitTests
 
             var riddleSolver = new RiddleSolver(4, 4, 3);
             var gameTree = riddleSolver.Solve(node);
-            ConsolePrinter.SetDebugMode();
-            //ConsolePrinter.Print(gameTree);
+            //ConsolePrinter.SetDebugMode();
+            //ConsolePrinter.Print(gameTree.DeadendNodeGroups.SelectMany(n=>n).Select(i=>i.Board).ToList());
 
             var count = gameTree.Solutions.Count;
 		    var distinctCount = gameTree.Solutions.Distinct(new SolutionComparer()).Count();
             Assert.IsTrue(count == distinctCount);
 
             // todo what the fuck(?)
-            Assert.AreEqual(3520, gameTree.Solutions.Count);
+            Assert.AreEqual(140, gameTree.Solutions.Count);
 
-            Assert.AreEqual(4, gameTree.DeadendNodeCount);
+            Assert.AreEqual(3, gameTree.DeadendNodeCount);
         }
 
         [TestMethod]
@@ -199,7 +257,7 @@ namespace UnitTests
 
             ConsolePrinter.SetDebugMode();
             ConsolePrinter.Print(gameTree);
-            Assert.AreEqual(2, gameTree.Solutions.Count);
+            Assert.AreEqual(1, gameTree.Solutions.Count);
             Assert.AreEqual(2, gameTree.DeadendNodeCount);
             Assert.AreEqual(1, gameTree.DeadendNodeGroups.Count);
         }
