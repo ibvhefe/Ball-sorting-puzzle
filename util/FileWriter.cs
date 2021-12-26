@@ -11,19 +11,19 @@ public class FileWriter
     {
         this.baseFolder = baseFolder;
     }
-    public void WriteToJson(int levelNumber, GameTreeInfo gameTreeInfo)
+    public void WriteToJson(string fileName, GameTreeInfo gameTreeInfo)
     {
-        using (StreamWriter file = File.CreateText($"{baseFolder}{levelNumber}.json"))
+        using (StreamWriter file = File.CreateText($"{baseFolder}{fileName}.json"))
         {
             JsonSerializer serializer = new JsonSerializer();
-            serializer.Serialize(file, Convert(gameTreeInfo, levelNumber));
+            serializer.Serialize(file, Convert(gameTreeInfo));
         }
     }
 
-    private ExportGameTreeInfo Convert(GameTreeInfo gameTreeInfo, int levelNumber)
+    private ExportGameTreeInfo Convert(GameTreeInfo gameTreeInfo)
     {
         var result = new ExportGameTreeInfo();
-        result.worldType = getAlternatingWorldType(levelNumber);
+        result.worldType = "Infinite"; //getAlternatingWorldType(levelNumber);
         result.tubeCount = gameTreeInfo.Riddle.GetLength(0);
         result.tubeSize = gameTreeInfo.Riddle.GetLength(1);
         result.colorCount = gameTreeInfo.ColorCount;

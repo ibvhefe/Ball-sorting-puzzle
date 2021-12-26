@@ -8,6 +8,8 @@ public class RiddleSolver : RiddleBase
 	HashSet<SolvingStep> visitedNodes;
 	HashSet<SolvingStep> deadendNodes;
 
+	Boolean solutionFound = false;
+
 	public RiddleSolver(int cupSize, int cupCount, int colorCount) : base(cupSize,cupCount,colorCount)
 	{
 		this.visitedNodes = new HashSet<SolvingStep>(new BoardComparer(this.cupCount, this.cupSize));
@@ -15,7 +17,7 @@ public class RiddleSolver : RiddleBase
 		this.deadendNodes = new HashSet<SolvingStep>(new BoardComparer(this.cupCount, this.cupSize));
 	}
 
-	public GameTreeInfo Solve(byte[,] cups)
+	public GameTreeInfo Solve(byte[,] cups, Boolean onlyFindOneSolution=false)
 	{
 		var currentStep = new SolvingStep()
 		{
@@ -24,9 +26,15 @@ public class RiddleSolver : RiddleBase
 			To = 0
 		};
 		var solution = new List<SolvingStep>();
-		SolveInternal(solution, currentStep);
+		SolveInternal(solution, currentStep, onlyFindOneSolution);
 		var solutionNodes = CreateHashMap(this.allSolutions);
-		var deadendNodeGroups = CollectDeadendNodes(solutionNodes, this.visitedNodes);
+		
+		(List<HashSet<SolvingStep>>, HashSet<SolvingStep>) deadendNodeGroups = (new List<HashSet<SolvingStep>>(),new HashSet<SolvingStep>());
+		if(onlyFindOneSolution)
+		{
+			deadendNodeGroups = CollectDeadendNodes(solutionNodes, this.visitedNodes);
+		}
+		
 
 		var perfectMoveCount = -1;
 		var badMoveCount = -1;
@@ -146,13 +154,22 @@ public class RiddleSolver : RiddleBase
 		return false;
 	}
 
-	private void SolveInternal(List<SolvingStep> currentSolution, SolvingStep currentStep)
-	{		
+    
+
+	private void SolveInternal(List<SolvingStep> currentSolution, SolvingStep currentStep, Boolean onlyFindOneSolution)
+	{
+		if(onlyFindOneSolution && solutionFound)
+		{
+			return;
+		}
+
 		if (IsGoalReached(currentStep.Board))
 		{
 			currentSolution.Insert(0, currentStep);
 			this.allSolutions.Add(Clone(currentSolution));
 			visitedNodes.Add(currentStep);
+			solutionFound = true;
+			Console.WriteLine("solution found");
 			return;
 		}
 			
@@ -180,8 +197,12 @@ public class RiddleSolver : RiddleBase
 				if (IsMovePossible(currentStep.Board, from, to, fromColor, toColor) && 
 				    DoesMoveMakeSense(currentStep.Board, from, to, fromColor, toColor, collectorTubePosition))
 				{
+					if(onlyFindOneSolution && solutionFound)
+		            {
+			            return;
+		            }
 					var nextStep = CreateNextStep(currentStep, from, to);
-					SolveInternal(currentSolution, nextStep);
+					SolveInternal(currentSolution, nextStep, onlyFindOneSolution);
 					currentSolution.Remove(nextStep);
 				}
 			}

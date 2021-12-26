@@ -163,7 +163,7 @@ namespace UnitTests
         }
 
         [TestMethod]
-        public void DifficulteLevelRemainsSolvable()
+        public void DifficultFourColorSample()
         {
             var node = new byte[4,4];
             node[0,0]=2;
@@ -195,6 +195,52 @@ namespace UnitTests
             Assert.AreEqual(17, gameTree.TwoStarLimit);
             Assert.AreEqual(18, gameTree.OneStarLimit);
         }
+
+        [TestMethod]
+        public void DifficultFiveColorSample()
+        {
+            var node = new byte[6,4];
+            node[0,0]=1;
+            node[0,1]=4;
+            node[0,2]=2;
+            node[0,3]=1;
+
+            node[1,0]=3;
+            node[1,1]=2;
+            node[1,2]=4;
+            node[1,3]=0;
+
+            node[2,0]=5;
+            node[2,1]=4;
+            node[2,2]=5;
+            node[2,3]=0;
+
+            node[3,0]=5;
+            node[3,1]=3;
+            node[3,2]=2;
+            node[3,3]=4;
+
+            node[4,0]=1;
+            node[4,1]=3;
+            node[4,2]=0;
+            node[4,3]=0;
+            
+            node[5,0]=2;
+            node[5,1]=5;
+            node[5,2]=1;
+            node[5,3]=3;
+
+            ConsolePrinter.SetDebugMode();
+            var riddleSolver = new RiddleSolver(4, 6, 5);
+            var gameTree = riddleSolver.Solve(node);
+            ConsolePrinter.Print(gameTree);
+
+            Assert.AreEqual(26, gameTree.ThreeStarLimit);
+            Assert.AreEqual(28, gameTree.TwoStarLimit);
+            Assert.AreEqual(30, gameTree.OneStarLimit);
+        }
+
+
 
         [TestMethod]
         public void ManyDeadendNodes()

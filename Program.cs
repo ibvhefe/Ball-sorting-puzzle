@@ -7,7 +7,7 @@ namespace Ball_sorting_puzzle
     {
         static void Main(string[] args)
         {
-            var repeatNeeded=0;
+            /*var repeatNeeded=0;
             var additionalEmptyTube=0;
             for(var i=1;i<=10;i++)
             {
@@ -40,7 +40,32 @@ namespace Ball_sorting_puzzle
                     }
                 }
                 Console.WriteLine(i);
+            }*/
+            
+
+            
+
+            //for(var i=1;i<=10;i++)
+            {
+                int cupSize = 4;
+                int cupCount = 12;
+                int colorCount = 10;
+                var riddleCreator = new RiddleCreator(cupSize, cupCount, colorCount);
+                var riddleSolver = new RiddleSolver(cupSize, cupCount, colorCount);
+                var fileWriter = new FileWriter(@"C:\Ball_sorting_puzzle_creator\Ball-sorting-puzzle\generated\");
+
+                // Workflow steps.
+                var randomRiddle = riddleCreator.Create();
+                ConsolePrinter.Print(randomRiddle);
+                var gameTree = riddleSolver.Solve(randomRiddle, true);
+                if(gameTree.Solutions.Any())
+                {
+                    //ConsolePrinter.Print(gameTree);
+                    var deadendRatio = (double)(gameTree.DeadendNodeCount) / (double)(gameTree.NodeCount);
+                    fileWriter.WriteToJson($"{deadendRatio*100}", gameTree);
+                }
             }
+
         }
     }
 }
