@@ -45,11 +45,11 @@ namespace Ball_sorting_puzzle
 
             
 
-            //for(var i=1;i<=10;i++)
+            for(var i=1;i<=100;i++)
             {
                 int cupSize = 4;
-                int cupCount = 12;
-                int colorCount = 10;
+                int cupCount = 3;
+                int colorCount = 2;
                 var riddleCreator = new RiddleCreator(cupSize, cupCount, colorCount);
                 var riddleSolver = new RiddleSolver(cupSize, cupCount, colorCount);
                 var fileWriter = new FileWriter(@"C:\Ball_sorting_puzzle_creator\Ball-sorting-puzzle\generated\");
@@ -57,12 +57,13 @@ namespace Ball_sorting_puzzle
                 // Workflow steps.
                 var randomRiddle = riddleCreator.Create();
                 ConsolePrinter.Print(randomRiddle);
-                var gameTree = riddleSolver.Solve(randomRiddle, true);
+                var gameTree = riddleSolver.Solve(randomRiddle, false);
                 if(gameTree.Solutions.Any())
                 {
                     //ConsolePrinter.Print(gameTree);
                     var deadendRatio = (double)(gameTree.DeadendNodeCount) / (double)(gameTree.NodeCount);
                     fileWriter.WriteToJson($"{deadendRatio*100}", gameTree);
+                    //fileWriter.WriteToJson($"{gameTree.ThreeStarLimit}", gameTree);
                 }
             }
 

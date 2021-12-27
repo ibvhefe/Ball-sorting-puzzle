@@ -30,7 +30,7 @@ public class RiddleSolver : RiddleBase
 		var solutionNodes = CreateHashMap(this.allSolutions);
 		
 		(List<HashSet<SolvingStep>>, HashSet<SolvingStep>) deadendNodeGroups = (new List<HashSet<SolvingStep>>(),new HashSet<SolvingStep>());
-		if(onlyFindOneSolution)
+		if(!onlyFindOneSolution)
 		{
 			deadendNodeGroups = CollectDeadendNodes(solutionNodes, this.visitedNodes);
 		}
@@ -169,7 +169,6 @@ public class RiddleSolver : RiddleBase
 			this.allSolutions.Add(Clone(currentSolution));
 			visitedNodes.Add(currentStep);
 			solutionFound = true;
-			Console.WriteLine("solution found");
 			return;
 		}
 			
