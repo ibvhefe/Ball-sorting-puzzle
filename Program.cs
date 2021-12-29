@@ -48,8 +48,8 @@ namespace Ball_sorting_puzzle
             for(var i=1;i<=100;i++)
             {
                 int cupSize = 4;
-                int cupCount = 3;
-                int colorCount = 2;
+                int cupCount = 10;
+                int colorCount = 9;
                 var riddleCreator = new RiddleCreator(cupSize, cupCount, colorCount);
                 var riddleSolver = new RiddleSolver(cupSize, cupCount, colorCount);
                 var fileWriter = new FileWriter(@"C:\Ball_sorting_puzzle_creator\Ball-sorting-puzzle\generated\");
