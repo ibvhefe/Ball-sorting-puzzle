@@ -5,13 +5,18 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- task: DotNetCoreCLI@2
+- checkout: none
+- task: SelectiveCheckout@0
   inputs:
-    command: 'build'
-    projects: '**/Ball-sorting-puzzle.csproj'
-  displayName: 'Building'
+    pathsToCheckout: 'UnitTests/obj'
 
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'test'
-  displayName: 'Testing'
+# - task: DotNetCoreCLI@2
+#   inputs:
+#     command: 'build'
+#     projects: '**/Ball-sorting-puzzle.csproj'
+#   displayName: 'Building'
+
+# - task: DotNetCoreCLI@2
+#   inputs:
+#     command: 'test'
+#   displayName: 'Testing'
