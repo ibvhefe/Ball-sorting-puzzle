@@ -5,7 +5,7 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- checkout: none
+#- checkout: none
 - task: SelectiveCheckout@0
   inputs:
     pathsToCheckout: 'UnitTests/obj'
